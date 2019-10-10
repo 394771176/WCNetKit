@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ASIFormDataRequest.h"
+#import <WCModule/ASIFormDataRequest.h>
 
 extern NSString *const APP_EVENT_NETWORK_ERROR;
 

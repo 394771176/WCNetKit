@@ -7,7 +7,6 @@
 //
 
 #import "WCDataService.h"
-#import "WCCategory.h"
 #import "WCNetManager.h"
 
 @implementation WCDataService

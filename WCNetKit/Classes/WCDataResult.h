@@ -6,7 +6,7 @@
 //  Copyright © 2019 cheng. All rights reserved.
 //
 
-#import "WCBaseEntity.h"
+#import <WCBaseItem/WCBaseEntity.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

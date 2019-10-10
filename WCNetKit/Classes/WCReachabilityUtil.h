@@ -6,8 +6,8 @@
 //  Copyright © 2019 cheng. All rights reserved.
 //
 
-#import "Reachability.h"
-#import "WCCategory.h"
+#import <WCModule/Reachability.h>
+#import <WCCategory/WCCategory.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
