@@ -1,0 +1,6 @@
+framework module WCEncrypt {
+  umbrella header "WCEncrypt-umbrella.h"
+
+  export *
+  module * { export * }
+}

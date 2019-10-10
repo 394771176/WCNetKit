@@ -1,0 +1,6 @@
+framework module WCNetKit {
+  umbrella header "WCNetKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

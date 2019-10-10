@@ -1,0 +1,46 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - WCBaseItem (0.1.0):
+    - WCCategory
+  - WCCategory (0.1.1)
+  - WCEncrypt/MD5 (0.1.2)
+  - WCModule/ASIHttpRequest (0.1.1):
+    - WCModule/Reachability
+  - WCModule/Reachability (0.1.1)
+  - WCNetKit (0.1.0):
+    - WCBaseItem
+    - WCCategory
+    - WCEncrypt/MD5
+    - WCModule/ASIHttpRequest
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - WCNetKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FBSnapshotTestCase
+    - WCBaseItem
+    - WCCategory
+    - WCEncrypt
+    - WCModule
+
+EXTERNAL SOURCES:
+  WCNetKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  WCBaseItem: 0ade94e9ea69af672bb62d97f30d1cf64e07f1d4
+  WCCategory: 1372c32c1b643a4398f5cb592cb93b09a5efd5f1
+  WCEncrypt: b86d93453f6a4bbf1a09dc922082b2d2d6699978
+  WCModule: 178a46ac7aa4a609db070cc95c0779f1c1593682
+  WCNetKit: 92ebf45fd4eee973cba438c68fdcf2c273b2ed17
+
+PODFILE CHECKSUM: 02d76323e72f8262f81cf5d6386f07b73cc36382
+
+COCOAPODS: 1.7.5

@@ -1,0 +1,6 @@
+framework module WCBaseItem {
+  umbrella header "WCBaseItem-umbrella.h"
+
+  export *
+  module * { export * }
+}

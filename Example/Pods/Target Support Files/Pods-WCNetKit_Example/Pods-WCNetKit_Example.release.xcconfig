@@ -1,0 +1,9 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/WCBaseItem" "${PODS_CONFIGURATION_BUILD_DIR}/WCCategory" "${PODS_CONFIGURATION_BUILD_DIR}/WCEncrypt" "${PODS_CONFIGURATION_BUILD_DIR}/WCModule" "${PODS_CONFIGURATION_BUILD_DIR}/WCNetKit"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/WCBaseItem/WCBaseItem.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCCategory/WCCategory.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCEncrypt/WCEncrypt.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCModule/WCModule.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCNetKit/WCNetKit.framework/Headers" $(SDKROOT)/usr/include/libxml2 $(SDKROOT)/usr/include/libz
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_LDFLAGS = $(inherited) -l"xml2" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "Foundation" -framework "MobileCoreServices" -framework "SystemConfiguration" -framework "UIKit" -framework "WCBaseItem" -framework "WCCategory" -framework "WCEncrypt" -framework "WCModule" -framework "WCNetKit"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
