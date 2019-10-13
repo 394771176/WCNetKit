@@ -11,10 +11,11 @@
 #endif
 
 #import "WCBaseEntity.h"
+#import "WCDataResult.h"
 #import "NSObject+YYModel.h"
 #import "YYClassInfo.h"
 #import "YYModel.h"
 
-FOUNDATION_EXPORT double WCBaseItemVersionNumber;
-FOUNDATION_EXPORT const unsigned char WCBaseItemVersionString[];
+FOUNDATION_EXPORT double WCModelVersionNumber;
+FOUNDATION_EXPORT const unsigned char WCModelVersionString[];
 

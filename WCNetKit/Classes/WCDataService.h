@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "BPURLRequest.h"
 #import "WCDataRequest.h"
-#import "WCDataResult.h"
+#import <WCModel/WCDataResult.h>
 
 @interface WCDataService : NSObject
 

@@ -12,7 +12,6 @@
 
 #import "BPURLRequest.h"
 #import "WCDataRequest.h"
-#import "WCDataResult.h"
 #import "WCDataService.h"
 #import "WCNetManager.h"
 #import "WCNetProtocol.h"

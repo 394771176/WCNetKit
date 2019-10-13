@@ -4,17 +4,17 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - WCBaseItem (0.1.0):
-    - WCCategory
   - WCCategory (0.1.1)
   - WCEncrypt/MD5 (0.1.2)
+  - WCModel/Entity (0.1.0):
+    - WCCategory
   - WCModule/ASIHttpRequest (0.1.1):
     - WCModule/Reachability
   - WCModule/Reachability (0.1.1)
   - WCNetKit (0.1.0):
-    - WCBaseItem
     - WCCategory
     - WCEncrypt/MD5
+    - WCModel/Entity
     - WCModule/ASIHttpRequest
 
 DEPENDENCIES:
@@ -24,9 +24,9 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - FBSnapshotTestCase
-    - WCBaseItem
     - WCCategory
     - WCEncrypt
+    - WCModel
     - WCModule
 
 EXTERNAL SOURCES:
@@ -35,11 +35,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  WCBaseItem: 0ade94e9ea69af672bb62d97f30d1cf64e07f1d4
   WCCategory: 1372c32c1b643a4398f5cb592cb93b09a5efd5f1
   WCEncrypt: b86d93453f6a4bbf1a09dc922082b2d2d6699978
+  WCModel: a7891fb6d5637566a20550cc9a7a5e70a4b96e08
   WCModule: 178a46ac7aa4a609db070cc95c0779f1c1593682
-  WCNetKit: 92ebf45fd4eee973cba438c68fdcf2c273b2ed17
+  WCNetKit: 5d4de3ef4348c4a08d7e081c4d0878a620adf40b
 
 PODFILE CHECKSUM: 02d76323e72f8262f81cf5d6386f07b73cc36382
 
