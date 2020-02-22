@@ -30,7 +30,11 @@
     if (_params && [_params isKindOfClass:NSMutableDictionary.class]) {
         params = (id)_params;
     } else {
-        params = [NSMutableDictionary dictionaryWithDictionary:_params];
+        if (_params) {
+            params = [NSMutableDictionary dictionaryWithDictionary:_params];
+        } else {
+            params = [NSMutableDictionary dictionary];
+        }
     }
     if (_needSystemParams) {
         [params addEntriesFromDictionary:[WCNetManager systemParams]];
