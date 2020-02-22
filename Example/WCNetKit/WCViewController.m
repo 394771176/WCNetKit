@@ -7,8 +7,9 @@
 //
 
 #import "WCViewController.h"
+#import <WCNetKit/WCNetManager.h>
 
-@interface WCViewController ()
+@interface WCViewController () <WCNetManagerProtocol>
 
 @end
 
@@ -17,13 +18,33 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [WCNetManager setup:self];
+    
+    NSLog(@"token = %@, agent = %@", [WCNetManager userToken], [WCNetManager userAgent]);
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"token = %@, agent = %@", [WCNetManager userToken], [WCNetManager userAgent]);
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark -
+
+//- (NSString *)userAgent
+//{
+//    return  @"456";
+//}
+
+- (NSString *)userToken
+{
+    return @"123";
 }
 
 @end

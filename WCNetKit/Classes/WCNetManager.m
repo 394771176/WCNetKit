@@ -45,33 +45,48 @@ static NSString *User_Agent = nil;
 
 + (NSString *)createUserAgent
 {
-    //必须在主线程中获取UA
-    if ([NSThread isMainThread]) {
-        [self initUserAgent];
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), ^{
+    if (!User_Agent) {
+        //必须在主线程中获取UA
+        if ([NSThread isMainThread]) {
             [self initUserAgent];
-        });
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), ^{
+                [self initUserAgent];
+            });
+        }
     }
     return User_Agent;
 }
 
 #pragma mark - WCNetManagerDelegate
 
+    
++ (BOOL)respondsMethod:(SEL)sel
+{
+    return (wcManager && [wcManager respondsToSelector:sel]);
+}
+    
 + (id)getReturnValueForMethod:(SEL)sel
 {
-    if (wcManager && [wcManager respondsToSelector:sel]) {
+    if ([self respondsMethod:sel]) {
+//        IMP imp = [(NSObject *)wcManager methodForSelector:sel];
+//        id (*func)(id, SEL) = (void *)imp;
+//        id result = func(wcManager, sel);
+//        return result;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         return [wcManager performSelector:sel];
+#pragma clang diagnostic pop
     }
     return nil;
 }
 
 + (NSString *)userAgent
 {
-    if (User_Agent) {
-        return User_Agent;
-    } else {
+    if ([self respondsMethod:@selector(userAgent)]) {
         return [self getReturnValueForMethod:@selector(userAgent)];
+    } else {
+        return [self createUserAgent];
     }
 }
 
