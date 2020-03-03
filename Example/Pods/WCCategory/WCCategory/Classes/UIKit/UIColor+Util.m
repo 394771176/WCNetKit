@@ -7,6 +7,7 @@
 //
 
 #import "UIColor+Util.h"
+#import "WCCategory+UI.h"
 
 @implementation UIColor (Util)
 
@@ -35,8 +36,7 @@
 }
 
 + (nullable UIColor *)colorWithHexValue:(uint)hexValue alpha:(float)alpha {
-    NSArray *array = [[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."];
-    if ([[array firstObject] floatValue] >= 10) {
+    if (AvailableiOS(10)) {
         return [UIColor
                 colorWithDisplayP3Red:((float)((hexValue & 0xFF0000) >> 16))/255.0
                 green:((float)((hexValue & 0xFF00) >> 8))/255.0
@@ -69,6 +69,37 @@
         col = [UIColor clearColor];
     }
     return col;
+}
+
+- (NSString *)hexString {
+    return [self hexStringWithAlpha:YES];
+}
+
+- (NSString *)hexStringWithAlpha:(BOOL)withAlpha {
+    CGColorRef color = self.CGColor;
+    size_t count = CGColorGetNumberOfComponents(color);
+    const CGFloat *components = CGColorGetComponents(color);
+    static NSString *stringFormat = @"%02x%02x%02x";
+    NSString *hex = nil;
+    if (count == 2) {
+        NSUInteger white = (NSUInteger)(components[0] * 255.0f);
+        hex = [NSString stringWithFormat:stringFormat, white, white, white];
+    } else if (count == 4) {
+        hex = [NSString stringWithFormat:stringFormat,
+               (NSUInteger)(components[0] * 255.0f),
+               (NSUInteger)(components[1] * 255.0f),
+               (NSUInteger)(components[2] * 255.0f)];
+    }
+    
+    if (hex && withAlpha && self.alpha < 1) {
+        hex = [hex stringByAppendingFormat:@"-%zd",
+               (unsigned long)(self.alpha * 100)];
+    }
+    return hex;
+}
+
+- (CGFloat)alpha {
+    return CGColorGetAlpha(self.CGColor);
 }
 
 @end

@@ -15,7 +15,6 @@
 #import "WCDataService.h"
 #import "WCNetManager.h"
 #import "WCNetProtocol.h"
-#import "WCReachabilityUtil.h"
 
 FOUNDATION_EXPORT double WCNetKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCNetKitVersionString[];

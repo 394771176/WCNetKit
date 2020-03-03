@@ -10,18 +10,17 @@
 
 @interface UITableView (Utils)
 
-/*
- * 该 section 之前所有cell的总高度
- */
-- (CGFloat)totalHeightForRowToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
-- (CGFloat)totalHeightForHeaderToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
-- (CGFloat)totalHeightForFooterToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
+//section之前header、cell、footer的高度之和
+- (CGFloat)totalHeightToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
 
-/*
- * 组合高度 cell, header, footer
- */
-- (CGFloat)totalHeightForRowAndHeaderToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
-- (CGFloat)totalHeightForRowAndFooterToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
-- (CGFloat)totalHeightForAllToSection:(NSInteger)section target:(id<UITableViewDelegate, UITableViewDataSource>)target;
+//indexpath之前header、cell、footer的高度之和, 和👆section的区别在于，即使row为0时，也会包含当前section的header的高度
+- (CGFloat)totalHeightToIndexPath:(NSIndexPath *)indexPath target:(id<UITableViewDelegate, UITableViewDataSource>)target;
+
+@end
+
+@interface UITableView (DTInsetTab)
+
+@property (nonatomic, assign) BOOL shouldRecognizeSimultaneouslyDT;
+@property (nonatomic, weak) UITableView *anotherTable;
 
 @end

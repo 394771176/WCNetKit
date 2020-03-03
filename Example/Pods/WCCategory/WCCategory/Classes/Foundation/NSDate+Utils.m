@@ -7,7 +7,8 @@
 //
 
 #import "NSDate+Utils.h"
-#import "WCCategory.h"
+//#import "WCCategory.h"
+#import "WCCategory+NS.h"
 
 @implementation NSDate (Utils)
 
@@ -119,7 +120,7 @@
     NSDate *now = [NSDate date];
     //实例化一个NSDateFormatter对象
     NSCalendar *gregorian = [NSCalendar currentCalendar];
-    unsigned int unitFlags = NSDayCalendarUnit;
+    unsigned int unitFlags = NSCalendarUnitDay;
     NSDateComponents *comps = [gregorian components:unitFlags fromDate:self  toDate:now  options:0];
     return [comps day];
 }
@@ -230,6 +231,21 @@
 - (NSInteger)day
 {
     return [self components].day;
+}
+
+- (NSInteger)hour
+{
+    return [self components].hour;
+}
+
+- (NSInteger)minute
+{
+    return [self components].minute;
+}
+
+- (NSInteger)second
+{
+    return [self components].second;
 }
 
 - (NSDateComponents *)components

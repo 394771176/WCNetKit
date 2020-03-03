@@ -7,27 +7,26 @@
 //
 
 #import "UINavigationController+PopAfterPush.h"
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 @implementation UINavigationController (PopAfterPush)
 
-- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated complete:(void (^)(void))complete
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated complete:(void (^)(void))completion
 {
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:complete];
-    [self pushViewController:viewController animated:animated];
-    [CATransaction commit];
+    if (completion) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:completion];
+        [self pushViewController:viewController animated:animated];
+        [CATransaction commit];
+    } else {
+        [self pushViewController:viewController animated:animated];
+    }
 }
 
 - (void)pushViewControllerWithPopOneController:(UIViewController *)viewController
 {
-    [self pushViewControllerWithPopOneController:viewController AndAnimated:YES];
-}
-
-- (void)pushViewControllerWithPopOneController:(UIViewController *)viewController AndAnimated:(BOOL)animated
-{
     __block id controller = [self.viewControllers lastObject];
-    [self pushViewController:viewController animated:animated complete:^{
+    [self pushViewController:viewController animated:YES complete:^{
         NSMutableArray *controllerList = [self.viewControllers mutableCopy];
         if (controller!=[controllerList firstObject]) {
             [controllerList removeObject:controller];
@@ -36,7 +35,7 @@
     }];
 }
 
-- (void)pushViewControllerWithPopRootController:(UIViewController *)viewController
+- (void)pushViewControllerWithPopToRootController:(UIViewController *)viewController
 {
     __block NSInteger index = self.viewControllers.count - 1;
     [self pushViewController:viewController animated:YES complete:^{
@@ -49,23 +48,22 @@
     }];
 }
 
-- (void)pushViewControllerController:(UIViewController *)viewController withPopToController:(Class)popClass
+- (void)pushViewControllerController:(UIViewController *)viewController withPopToControllerClass:(Class)popClass
 {
-    NSMutableArray *controllerList = [self.viewControllers mutableCopy];
-    for (int i=0; i<controllerList.count - 1; i++) {
-        UIViewController *vc = [controllerList safeObjectAtIndex:i];
-        if ([vc isKindOfClass:popClass]) {
-            [self pushViewControllerController:viewController withPopToIndex:i];
-            return;
-            break;
+    [self pushViewController:viewController animated:YES complete:^{
+        NSMutableArray *controllerList = [self.viewControllers mutableCopy];
+        for (int i=0; i<controllerList.count - 2; i++) {
+            UIViewController *vc = [controllerList safeObjectAtIndex:i];
+            if ([vc isKindOfClass:popClass]) {
+                [controllerList removeObjectsInRange:NSMakeRange(i+1, controllerList.count-i-2)];
+                self.viewControllers = [NSArray arrayWithArray:controllerList];
+                break;
+            }
         }
-    }
-    
-    //如果未找到 直接push
-    [self pushViewController:viewController animated:YES];
+    }];
 }
 
-- (void)addControllerToBackActionIndex:(UIViewController *)controller
+- (void)insertControllerForBackAction:(UIViewController *)controller
 {
     if (!controller) {
         return;
@@ -79,15 +77,10 @@
     self.viewControllers = newControlls;
 }
 
-- (void)pushViewControllerController:(UIViewController *)viewController withPopToIndex:(NSInteger)index
+- (void)insertControllerAndDidBackAction:(UIViewController *)controller
 {
-    [self pushViewController:viewController animated:YES complete:^{
-        NSMutableArray *controllerList = [self.viewControllers mutableCopy];
-        if (index>=0&&controllerList.count>index+2) {
-            [controllerList removeObjectsInRange:NSMakeRange(index+1, controllerList.count-index-2)];
-            self.viewControllers = [NSArray arrayWithArray:controllerList];
-        }
-    }];
+    [self insertControllerForBackAction:controller];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //跳转页面时 移除队列指定class的vc
@@ -100,10 +93,10 @@
             UIViewController *vc = [controllerList safeObjectAtIndex:index];
             if ([vc isKindOfClass:popClass]) {
                 [controllerList removeObjectAtIndex:index];
-                self.viewControllers = [NSArray arrayWithArray:controllerList];
             }
             index --;
         }
+        self.viewControllers = [NSArray arrayWithArray:controllerList];
     }];
 }
 

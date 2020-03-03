@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 // 占位符
-extern NSString *FFPlaceholderChar();
+extern NSString *FFPlaceholderChar(void);
 extern NSString *FFHighlightColorStr(NSString *string);
 
 @interface NSString (Utils)
@@ -87,8 +87,7 @@ extern NSString *FFHighlightColorStr(NSString *string);
 - (NSString *)getUrlParamValueForkey:(NSString *)key;
 
 /*
- key没有则添加
- 有则更换value
+ key没有则添加，有则更换value
  */
 - (NSString *)setUrlParamsValue:(NSString *)value forKey:(NSString *)key;
 
@@ -96,7 +95,7 @@ extern NSString *FFHighlightColorStr(NSString *string);
 
 - (NSURL *)serializeURLWithParams:(NSDictionary *)params httpMethod:(NSString *)httpMethod;
 
-- (NSMutableAttributedString *)HTMLAttributedString;
+//- (NSMutableAttributedString *)HTMLAttributedString;
 
 @end
 
@@ -112,6 +111,25 @@ extern NSString *FFHighlightColorStr(NSString *string);
 
 @end
 
+@interface NSString (format)
+
+//距离 m, km， distance 为米单位
++ (NSString *)formatDistance:(CGFloat)distance;
+//距离 米, 千米， distance 为米单位
++ (NSString *)formatDistanceChinese:(CGFloat)distance;
+
+//数目 - k, w, 10w
++ (NSString *)formatNum1K:(NSInteger)num;
++ (NSString *)formatNum1W:(NSInteger)num;
++ (NSString *)formatNum10W:(NSInteger)num;
+
+//数目 - 千， 万， 10万
++ (NSString *)formatNum1KChinese:(NSInteger)num;
++ (NSString *)formatNum1WChinese:(NSInteger)num;
++ (NSString *)formatNum10WChinese:(NSInteger)num;
+
+@end
+
 @interface NSString (Money)
 
 + (NSString *)translateMoneyToString:(CGFloat)money;//两位小数，若小数为零 则不显示小数
@@ -119,7 +137,7 @@ extern NSString *FFHighlightColorStr(NSString *string);
 + (NSString *)translateMoneyCommaString:(CGFloat)money;//每三位 用逗号隔开
 + (NSString *)translateMoneyToMoneyIntString:(NSInteger)money;//每三位 用逗号隔开
 
-//同  translateMoneyToMoneyString:(CGFloat)money
+//同 translateMoneyToMoneyString:(CGFloat)money
 + (NSString *)stringDecimalStyleFromNumber:(CGFloat)number;
 
 @end

@@ -21,8 +21,14 @@
 
 + (NSAttributedString *)string:(NSString *)string rangeText:(NSString *)text font:(UIFont *)font;
 + (NSAttributedString *)string:(NSString *)string rangeText:(NSString *)text fontSize:(CGFloat)fontSize;
+
+#if __has_include(<WCCategory/WCCategory+UI.h>)
+
 + (NSAttributedString *)string:(NSString *)string rangeText:(NSString *)text colorString:(NSString *)colorString;
 + (NSAttributedString *)string:(NSString *)string rangeText:(NSString *)text fontSize:(CGFloat)fontSize colorString:(NSString *)colorString;
+
+#endif
+
 + (NSAttributedString *)string:(NSString *)string rangeText:(NSString *)text font:(UIFont *)font color:(UIColor *)color;
 
 /*

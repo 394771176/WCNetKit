@@ -18,7 +18,6 @@ typedef NS_ENUM(NSUInteger, GradientType) {
     GradientTypeUpleftToLowright = 2,//左上到右下
     
     GradientTypeUprightToLowleft = 3,//右上到左下
-    
 };
 
 // 生成一个给定尺寸的空图片
@@ -26,6 +25,9 @@ extern UIImage *FFPlaceholderImageWithSize(CGSize size);
 extern UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintColor);
 
 @interface UIImage (Utils)
+
+@property (nonatomic, readonly) CGFloat width;
+@property (nonatomic, readonly) CGFloat height;
 
 // 修改图片颜色
 - (UIImage *)tintedWithColor:(UIColor *)color;
@@ -39,6 +41,23 @@ extern UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintCol
 
 - (UIImage *)imageWithAlpha:(CGFloat)alpha;
 - (UIImage *)addImageToBottom:(UIImage *)image;
+
+/**
+ 图片圆角
+ */
+- (UIImage *)addCornerRadius:(CGFloat)cornerRadius;
+
+/**
+ 将image按照指定的比例放大或缩小
+ */
+- (UIImage *)resizeWithScale:(CGFloat)scale;
+
+/**
+ 将image按照指定的大小放大或缩小
+ */
+- (UIImage *)resizeToSize:(CGSize)size;
+
+- (UIImage *)resizeWithMaxSize:(CGSize)size;
 
 @end
 
@@ -59,7 +78,9 @@ extern UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintCol
 
 + (UIImage *)imageWithSize:(CGSize)size borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth cornerRadius:(CGFloat)cornerRadius;
 + (UIImage *)imageWithSize:(CGSize)size bgColor:(UIColor *)bgColor borderColor:(UIColor *)borderColor borderWidth:(CGFloat)borderWidth cornerRadius:(CGFloat)cornerRadius;
+
 /**图片渐变色**/
 + (UIImage *)gradientColorImageFromColors:(NSArray*)colors gradientType:(GradientType)gradientType imgSize:(CGSize)imgSize;
+
 @end
 

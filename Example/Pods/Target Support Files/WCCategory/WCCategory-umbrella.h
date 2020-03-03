@@ -16,10 +16,12 @@
 #import "NSAttributedString+Utils.h"
 #import "NSDate+Utils.h"
 #import "NSDictionary+Utils.h"
+#import "NSJSONHelper.h"
 #import "NSObject+DTFix.h"
 #import "NSObject+Utils.h"
 #import "NSString+Utils.h"
 #import "NSURL+Utils.h"
+#import "WCCategory+NS.h"
 #import "UIButton+Utils.h"
 #import "UIColor+Util.h"
 #import "UIDevice+Utils.h"
@@ -32,6 +34,7 @@
 #import "UIView+animation.h"
 #import "UIView+Utils.h"
 #import "UIViewController+Utils.h"
+#import "WCCategory+UI.h"
 
 FOUNDATION_EXPORT double WCCategoryVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCCategoryVersionString[];

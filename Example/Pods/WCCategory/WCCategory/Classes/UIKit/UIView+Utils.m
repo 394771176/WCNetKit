@@ -7,7 +7,7 @@
 //
 
 #import "UIView+Utils.h"
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 @implementation UIView (Frame)
 
@@ -116,6 +116,24 @@
     self.frame = frame;
 }
 
+- (CGFloat)cornerRadius
+{
+    return self.layer.cornerRadius;
+}
+
+- (void)setCornerRadius:(CGFloat)cornerRadius
+{
+    self.layer.cornerRadius = cornerRadius;
+    self.layer.masksToBounds = YES;
+//    if (cornerRadius>0) {
+//        self.layer.shouldRasterize = YES;
+//        self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+//    } else {
+//        self.layer.shouldRasterize = NO;
+//        self.layer.rasterizationScale = 1.0f;
+//    }
+}
+
 - (void)setFixRightWidth:(CGFloat)width
 {
     [self setFixRight:self.right width:width];
@@ -164,18 +182,6 @@
 - (void)setLeft:(CGFloat)left andWidth:(CGFloat)width
 {
     self.frame = CGRectMake(left, self.top, width, self.height);
-}
-
-- (void)setCornerRadius:(CGFloat)cornerRadius
-{
-    self.layer.cornerRadius = cornerRadius;
-    if (cornerRadius>0) {
-        self.layer.shouldRasterize = YES;
-        self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
-    } else {
-        self.layer.shouldRasterize = NO;
-        self.layer.rasterizationScale = 1.0f;
-    }
 }
 
 @end
@@ -424,29 +430,6 @@
 {
     BOOL findFirstResponder = NO;
     return [UIView firstTextResponderWithRootView:self findFirstResponder:&findFirstResponder];
-}
-
-@end
-
-
-@implementation UIView (Animate)
-
-- (void)expandAnimated:(CGRect)rect {
-    CGFloat x = CGRectGetMidX(rect);
-    CGFloat y = CGRectGetMidY(rect);
-    CGFloat w = x*2 > self.width ? x : self.width-x;
-    CGFloat h = y*2 > self.height ? y : self.height-y;
-    CGFloat r = sqrtf(pow(w, 2) + pow(h, 2));
-    
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.path = [UIBezierPath bezierPathWithOvalInRect:CGRectInset(rect, -r, -r)].CGPath;
-    self.layer.mask = maskLayer;
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    animation.fromValue = (id)([UIBezierPath bezierPathWithOvalInRect:rect].CGPath);
-    animation.duration = r/800;
-    [maskLayer addAnimation:animation forKey:@"path"];
 }
 
 @end

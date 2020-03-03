@@ -8,7 +8,8 @@
 
 #import "NSDictionary+Utils.h"
 #import <libkern/OSAtomic.h>
-#import "WCCategory.h"
+//#import "WCCategory.h"
+#import "WCCategory+NS.h"
 
 NSDictionary *FFMergeDictionaries(NSDictionary *first, NSDictionary *second) {
     if ([first isKindOfClass:[NSDictionary class]] && [second isKindOfClass:[NSDictionary class]]) {

@@ -33,7 +33,7 @@
 // 同步请求
 + (WCDataResult *)sync:(WCDataRequest *)req
 {
-    if ([WCReachabilityUtil sharedInstance].isReachable) {
+    if ([DTReachabilityUtil sharedInstance].isReachable) {
         return [WCDataResult resultForNetworkError];
     }
     

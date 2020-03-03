@@ -7,7 +7,7 @@
 //
 
 #import "UIImage+Utils.h"
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 UIImage *FFPlaceholderImageWithSize(CGSize size) {
     return FFPlaceholderImageWithSizeAndColor(size, nil);
@@ -26,6 +26,16 @@ UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintColor) {
 }
 
 @implementation UIImage (Utils)
+
+- (CGFloat)width
+{
+    return self.size.width;
+}
+
+- (CGFloat)height
+{
+    return self.size.height;
+}
 
 - (UIImage *)tintedWithColor:(UIColor *)color {
     return [self tintedWithColor:color fraction:0];
@@ -134,6 +144,17 @@ UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintColor) {
     return resultingImage;
 }
 
+- (UIImage *)addCornerRadius:(CGFloat)cornerRadius
+{
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, [UIScreen mainScreen].scale);
+    CGRect drawRect = CGRectMake(0, 0, self.size.width, self.size.height);
+    [[UIBezierPath bezierPathWithRoundedRect:drawRect cornerRadius:cornerRadius] addClip];
+    [self drawInRect:drawRect];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
 //- (UIImage *)resizableImageForAlliOSVersionWithCapInsets:(UIEdgeInsets)capInsets {
 //    if ([[UIDevice currentDevice].systemVersion doubleValue] > 4.99) {
 //        return [self resizableImageWithCapInsets:capInsets];
@@ -141,6 +162,35 @@ UIImage *FFPlaceholderImageWithSizeAndColor(CGSize size, UIColor *tintColor) {
 //        return [self stretchableImageWithLeftCapWidth:capInsets.left topCapHeight:capInsets.top];
 //    }
 //}
+
+- (UIImage *)resizeWithScale:(CGFloat)scale
+{
+    return [self resizeToSize:CGSizeMake(self.width * scale, self.height * scale)];
+}
+
+- (UIImage *)resizeToSize:(CGSize)size
+{
+    if (self.size.width==size.width&&self.size.height==size.height) {
+        return self;
+    }
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(size.width, size.height), NO, [UIScreen mainScreen].scale);
+    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *reSizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return reSizeImage;
+}
+
+- (UIImage *)resizeWithMaxSize:(CGSize)size
+{
+    if (self.size.width>size.width || self.size.height>size.height) {
+        CGSize maxSize = CGSizeMake(size.width, floorf(size.width/self.size.width*self.size.height));
+        if (maxSize.height>size.height) {
+            maxSize = CGSizeMake(floorf(size.height/self.size.height*self.size.width), size.height);
+        }
+        return [self resizeToSize:maxSize];
+    }
+    return self;
+}
 
 @end
 

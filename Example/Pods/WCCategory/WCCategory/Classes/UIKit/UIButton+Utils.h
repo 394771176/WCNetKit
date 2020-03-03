@@ -20,7 +20,6 @@
 @property (nonatomic, assign) IBInspectable BOOL preventViolenceClick;//暴力点击
 
 /**
- *  @author
  *
  *  同时向按钮的四个方向延伸响应面积
  *
@@ -46,8 +45,6 @@
 
 - (void)setTitle:(NSString *)title fontSize:(CGFloat)fontSize colorString:(NSString *)colorString;
 - (void)setTitle:(NSString *)title font:(UIFont *)font colorString:(NSString *)colorString;
-
-- (void)buttonSetTitle:(NSString *)title font:(UIFont *)font colorString:(NSString *)colorString;
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image;
 - (void)setTitle:(NSString *)title image:(UIImage *)image selImage:(UIImage *)selImage;

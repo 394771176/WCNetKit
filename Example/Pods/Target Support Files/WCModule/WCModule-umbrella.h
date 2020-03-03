@@ -37,6 +37,7 @@
 #import "ASIS3ObjectRequest.h"
 #import "ASIS3Request.h"
 #import "ASIS3ServiceRequest.h"
+#import "DTReachabilityUtil.h"
 #import "Reachability.h"
 
 FOUNDATION_EXPORT double WCModuleVersionNumber;

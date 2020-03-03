@@ -10,6 +10,12 @@
 
 @implementation UIImageView (Utils)
 
++ (id)imageViewWithImageName:(NSString *)name
+{
+    UIImageView *view = [(UIImageView *)[self alloc] initWithImage:[UIImage imageNamed:name]];
+    return view;
+}
+
 - (void)setImageWithName:(NSString *)name
 {
     if (name) {

@@ -8,7 +8,8 @@
 
 #import "NSArray+Utils.h"
 #import <libkern/OSAtomic.h>
-#import "WCCategory.h"
+//#import "WCCategory.h"
+#import "WCCategory+NS.h"
 
 NSArray *FFMergeArraies(NSArray *first, NSArray *second) {
     if (first && second.count == 0) return [first copy];  // Fast Path.

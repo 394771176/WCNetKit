@@ -3,7 +3,7 @@ FRAMEWORK_SEARCH_PATHS = $(inherited) "$(PLATFORM_DIR)/Developer/Library/Framewo
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCCategory/WCCategory.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCEncrypt/WCEncrypt.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCModel/WCModel.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCModule/WCModule.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/WCNetKit/WCNetKit.framework/Headers" $(SDKROOT)/usr/include/libxml2 $(SDKROOT)/usr/include/libz
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -l"xml2" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "FBSnapshotTestCase" -framework "Foundation" -framework "MobileCoreServices" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit" -framework "WCCategory" -framework "WCEncrypt" -framework "WCModel" -framework "WCModule" -framework "WCNetKit" -framework "XCTest"
+OTHER_LDFLAGS = $(inherited) -l"xml2" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "CoreText" -framework "FBSnapshotTestCase" -framework "Foundation" -framework "MobileCoreServices" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit" -framework "WCCategory" -framework "WCEncrypt" -framework "WCModel" -framework "WCModule" -framework "WCNetKit" -framework "XCTest"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

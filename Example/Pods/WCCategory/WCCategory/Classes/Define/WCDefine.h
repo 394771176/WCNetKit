@@ -40,7 +40,47 @@
 
 #define SAFE_BOTTOM_TITLE_EDGE_TOP_HEIGHT  (IS_iPhoneX ? -15.f : 0.f)//底部按钮文案适配X后 上移的距离
 
+#define STRING(num)         [NSString stringWithFormat:@"%zd", (num)]
+#define STRING_F(num)       [NSString stringWithFormat:@"%f", (num)]
+#define STRING_INTF(num)    [NSString stringWithFormat:@"%.0f", (num)]
+
+#define CELL_ID(str)        static NSString *cellId = @#str;
+
+#define URL(str)            [NSURL URLWithString:@#str]
+
+#define RGB(r, g, b)        RGBA(r, g, b, 1)
+#define RGBA(r, g, b, a)    [UIColor colorWithRed:(float)(r)/255.0 green:(float)(g)/255.0 blue:(float)(b)/255.0 alpha:a]
+#define RGB_A_RONDOM(a)     RGBA((arc4random_uniform(256)/255.f), (arc4random_uniform(256)/255.f), (arc4random_uniform(256)/255.f), a)
+
+#define WHITE(w)            WHITE_A(w, 1)
+#define WHITE_A(w, a)       [UIColor colorWithWhite:w alpha:a]
+
+#define COLOR_RANDOM        RGBA_RONDOM(1)
+#define COLOR_A_RANDOM      RGBA_RONDOM((0.2 + arc4random_uniform(5)/10.f))
+
+#if __has_include(<WCCategory/WCCategory+UI.h>)
+
+#define COLOR(str)          [UIColor colorWithHexString:@#str]
+
+#endif
+
+// 系统字体
+#define FONT(size)      [UIFont systemFontOfSize:size]
+#define FONT_B(size)    [UIFont boldSystemFontOfSize:size]
+#define FONT_I(size)    [UIFont italicSystemFontOfSize:size]
+
+#define SCALE_SCREEN_SIZE(size)                 ceil(SCREEN_WIDTH/375*(size))
+#define SCALE_SCREEN_SIZE_PHONE(size)           ceil(MIN(SCREEN_WIDTH, 414.f)/375*(size))
+#define SCALE_SCREEN_SIZE_PAD(size)             ceil(MIN(SCREEN_WIDTH, 600.f)/375*(size))
+
 #define WEAK_SELF      __weak __typeof(&*self)weakSelf = self;
+
+#define WC_Swizzle(_method1_, _method2_) \
+{ \
+Method originalInitMethod = class_getInstanceMethod(self, _method1_); \
+Method modifiedInitMethod = class_getInstanceMethod(self, _method2_); \
+method_exchangeImplementations(originalInitMethod, modifiedInitMethod); \
+}
 
 #define SHARED_INSTANCE_H  + (instancetype)sharedInstance;
 #define SHARED_INSTANCE_M  \

@@ -93,15 +93,7 @@
 /**
  递归查找
  */
-- (UIView *)findSubview:(NSString *)name resursion:(BOOL)resursion;
-
-@end
-
-
-@interface UIView (Animate)
-
-// 从指定位置扩张
-- (void)expandAnimated:(CGRect)rect;
+//- (UIView *)findSubview:(NSString *)name resursion:(BOOL)resursion;
 
 @end
 

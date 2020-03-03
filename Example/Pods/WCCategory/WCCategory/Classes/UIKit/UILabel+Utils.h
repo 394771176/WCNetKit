@@ -11,8 +11,6 @@
 
 @interface UILabel (Utils)
 
-- (CGSize)measureSize;
-
 + (id)labelWithFrame:(CGRect)frame font:(UIFont *)font color:(UIColor *)color;
 
 + (id)labelWithFrame:(CGRect)frame font:(UIFont *)font colorString:(NSString *)colorString;
@@ -21,9 +19,16 @@
 
 + (id)labelWithFrame:(CGRect)frame fontSize:(CGFloat)fontSize colorString:(NSString *)colorString;
 
+//- (CGSize)measureSize;
+
 - (void)setFontSize:(CGFloat)fontSize;
 - (void)setTextColorString:(NSString *)colorString;
 - (void)setFontSize:(CGFloat)fontSize colorString:(NSString *)colorString;
+
+- (CGFloat)getTextWidth;
+- (CGFloat)getTextHeight;
+- (void)setLabelWidthWithString:(NSString *)string;
+- (void)setLabelHeightWithString:(NSString *)string;
 
 @end
 
@@ -40,7 +45,5 @@
 - (void)setText:(NSString *)text withLineSpace:(float)lineSpace;
 - (void)setText:(NSString *)text withWordSpace:(float)wordSpace;
 - (void)setText:(NSString *)text withLineSpace:(float)lineSpace wordSpace:(float)wordSpace;
-
-- (CGFloat)getAttributedTextWidth;
 
 @end

@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, DTAnimationConfigType) {
+    DTAnimationConfigTypeNone = 0,
+    DTAnimationConfigTypeScale,//缩放
+    DTAnimationConfigTypeShake,//抖动
+    DTAnimationConfigTypeFlip,//翻转
+    DTAnimationConfigTypeUpDown,//上下
+};
+
 @interface UIView (DTAnimation)
 
 - (void)startFadeTransition;
@@ -29,14 +37,25 @@
 
 - (void)startWiggleAnimation;
 
-- (void)startScaleAnimationDelay:(CGFloat)delay Complete:(void (^)(void))complete;
+- (void)startScaleAnimationDelay:(CGFloat)delay complete:(void (^)(void))complete;
 
 //类似心跳，跳一下 停一下
 - (void)startDTShakeAnimation;
 
 - (void)startScaleAnimation;
 
-- (void)scaleAnimationDelay:(CGFloat)delay;
+- (void)scaleAnimationDelay:(CGFloat)delay repeatCount:(float)repeatCount;
+
+- (void)startFlipAnimation;
+
+- (void)animationWithType:(DTAnimationConfigType)type repeatCount:(float)repeatCount;
+
+@end
+
+@interface UIView (Animate)
+
+// 从指定位置扩张
+- (void)expandAnimated:(CGRect)rect;
 
 @end
 
@@ -55,16 +74,16 @@ CGFloat ArcAngle(CGFloat angle);
 /**
  两点距离，及半径
  @param center 圆心
- @param point
- @return
+ @param point  点坐标
+ @return 两点距离
  */
 CGFloat ArcDistance(CGPoint center, CGPoint point);
 
 /**
- 获取旋转角度
+ 获取旋转角度, x轴沿顺时针方向旋转
  @param center 圆心点
- @param point
- @return
+ @param point  点坐标
+ @return 角度
  */
 CGFloat ArcAngleFrom(CGPoint center, CGPoint point);
 

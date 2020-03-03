@@ -10,6 +10,8 @@
 
 @interface UIImageView (Utils)
 
-- (void)setImageWithName:(nullable NSString *)name;
++ (id)imageViewWithImageName:(NSString *)name;
+
+- (void)setImageWithName:(NSString *)name;
 
 @end

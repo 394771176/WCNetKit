@@ -7,7 +7,7 @@
 //
 
 #import "UIButton+Utils.h"
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 @implementation UIButton (Utils)
 
@@ -214,12 +214,6 @@ static char leftNameKey;
 {
     [self setTitle:title forState:UIControlStateNormal];
     [self setTitleFont:font color:[UIColor colorWithString:colorString]];
-}
-
-- (void)buttonSetTitle:(NSString *)title font:(UIFont *)font colorString:(NSString *)colorString
-{
-    [self setTitle:title forState:UIControlStateNormal];
-    [self setTitleFont:font color:[UIColor colorWithHexString:colorString]];
 }
 
 - (void)setTitle:(NSString *)title image:(UIImage *)image

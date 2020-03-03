@@ -14,7 +14,7 @@
 #include <mach/mach.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 @implementation UIDevice (Utils)
 

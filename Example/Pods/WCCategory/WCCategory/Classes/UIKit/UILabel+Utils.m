@@ -7,16 +7,9 @@
 //
 
 #import "UILabel+Utils.h"
-#import "WCCategory.h"
+#import "WCCategory+UI.h"
 
 @implementation UILabel (Utils)
-
-- (CGSize)measureSize
-{
-    NSDictionary *attributes = @{ NSFontAttributeName: self.font };
-    CGSize measureSize = [self.text sizeWithAttributes:attributes];
-    return measureSize;
-}
 
 + (id)labelWithFrame:(CGRect)frame font:(UIFont *)font color:(UIColor *)color
 {
@@ -44,6 +37,13 @@
     return [self labelWithFrame:frame font:[UIFont systemFontOfSize:fontSize] color:[UIColor colorWithHexString:colorString]];
 }
 
+- (CGSize)measureSize
+{
+    NSDictionary *attributes = @{ NSFontAttributeName: self.font };
+    CGSize measureSize = [self.text sizeWithAttributes:attributes];
+    return measureSize;
+}
+
 - (void)setFontSize:(CGFloat)fontSize
 {
     [self setFont:[UIFont systemFontOfSize:fontSize]];
@@ -53,10 +53,33 @@
 {
     [self setTextColor:[UIColor colorWithString:colorString]];
 }
+
 - (void)setFontSize:(CGFloat)fontSize colorString:(NSString *)colorString
 {
     [self setFontSize:fontSize];
     [self setTextColorString:colorString];
+}
+
+- (void)setLabelWidthWithString:(NSString *)string
+{
+    self.text = string;
+    self.width = [self getTextWidth];
+}
+
+- (void)setLabelHeightWithString:(NSString *)string
+{
+    self.text = string;
+    self.height = [self getTextHeight];
+}
+
+- (CGFloat)getTextWidth
+{
+    return ceilf([self textRectForBounds:CGRectMake(0, 0, FLT_MAX, self.height) limitedToNumberOfLines:self.numberOfLines].size.width);
+}
+
+- (CGFloat)getTextHeight
+{
+    return ceilf([self textRectForBounds:CGRectMake(0, 0, self.width, FLT_MAX) limitedToNumberOfLines:self.numberOfLines].size.height);
 }
 
 @end
@@ -138,11 +161,6 @@
     [paragraphStyle setLineSpacing:lineSpace];
     [attributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, [text length])];
     self.attributedText = attributedString;
-}
-
-- (CGFloat)getAttributedTextWidth
-{
-    return ceilf([self textRectForBounds:CGRectMake(0, 0, FLT_MAX, self.height) limitedToNumberOfLines:self.numberOfLines].size.width);
 }
 
 @end

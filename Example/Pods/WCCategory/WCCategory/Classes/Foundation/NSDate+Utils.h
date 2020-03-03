@@ -72,7 +72,9 @@
 - (NSInteger)year;
 - (NSInteger)month;
 - (NSInteger)day;
-//- (NSInteger)hour;
+- (NSInteger)hour;
+- (NSInteger)minute;
+- (NSInteger)second;
 
 - (NSInteger)weekDay;
 - (NSString *)weekDayStr;//日 一。。。六
