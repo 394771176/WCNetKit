@@ -4,24 +4,33 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - WCCategory (0.1.4):
-    - WCCategory/Define (= 0.1.4)
-    - WCCategory/Foundation (= 0.1.4)
-    - WCCategory/UIKit (= 0.1.4)
-  - WCCategory/Define (0.1.4)
-  - WCCategory/Foundation (0.1.4):
+  - WCCategory (0.1.5):
+    - WCCategory/Define (= 0.1.5)
+    - WCCategory/Foundation (= 0.1.5)
+    - WCCategory/UIKit (= 0.1.5)
+  - WCCategory/Define (0.1.5)
+  - WCCategory/Foundation (0.1.5):
     - WCCategory/Define
-  - WCCategory/UIKit (0.1.4):
+  - WCCategory/UIKit (0.1.5):
     - WCCategory/Foundation
   - WCEncrypt/MD5 (0.1.2)
-  - WCModel/Entity (0.1.0):
+  - WCModel/Cache (0.1.1):
+    - WCModel/File
+    - WCModule/FMDB
+  - WCModel/Entity (0.1.1):
     - WCCategory
+  - WCModel/File (0.1.1):
+    - WCCategory
+    - WCModule/RegexKitLite
   - WCModule/ASIHttpRequest (0.1.6):
     - WCModule/Reachability
+  - WCModule/FMDB (0.1.6)
   - WCModule/Reachability (0.1.6)
-  - WCNetKit (0.1.1):
+  - WCModule/RegexKitLite (0.1.6)
+  - WCNetKit (0.1.2):
     - WCCategory
     - WCEncrypt/MD5
+    - WCModel/Cache
     - WCModel/Entity
     - WCModule/ASIHttpRequest
 
@@ -43,11 +52,11 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  WCCategory: 5dddb6a3ce3d5ec6931358b1bdea7b30afe6be01
+  WCCategory: 9c97b0396f4e96f2bf8e8fa8b9cbef8bfd945f97
   WCEncrypt: b86d93453f6a4bbf1a09dc922082b2d2d6699978
-  WCModel: a7891fb6d5637566a20550cc9a7a5e70a4b96e08
+  WCModel: 9d8bee0cff43028eea166b7d946290d6d02da245
   WCModule: 968b93fd10c2f545603c498a3a9113791d66ad12
-  WCNetKit: d0bd6b3e6b2ba74f21fd28461159a2d3f1b1130d
+  WCNetKit: 867fb2af7977c50089b82f2291d4461f4d512006
 
 PODFILE CHECKSUM: 02d76323e72f8262f81cf5d6386f07b73cc36382
 

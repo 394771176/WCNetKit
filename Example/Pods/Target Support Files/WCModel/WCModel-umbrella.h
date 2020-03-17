@@ -10,11 +10,15 @@
 #endif
 #endif
 
+#import "BPCacheManager.h"
+#import "BPLocalManager.h"
 #import "WCBaseEntity.h"
 #import "WCDataResult.h"
 #import "NSObject+YYModel.h"
 #import "YYClassInfo.h"
 #import "YYModel.h"
+#import "BPFileUtil.h"
+#import "DTFileManager.h"
 
 FOUNDATION_EXPORT double WCModelVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCModelVersionString[];

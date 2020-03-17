@@ -7,7 +7,7 @@
 //
 
 #import "WCDataService.h"
-#import "WCNetManager.h"
+#import "WCNetKit.h"
 
 @implementation WCDataService
 
@@ -33,7 +33,7 @@
 // 同步请求
 + (WCDataResult *)sync:(WCDataRequest *)req
 {
-    if ([DTReachabilityUtil sharedInstance].isReachable) {
+    if (![DTReachabilityUtil sharedInstance].isReachable) {
         return [WCDataResult resultForNetworkError];
     }
     
@@ -46,14 +46,7 @@
     
     WCDataResult *dataResult = nil;
     if (result) {
-        switch (req.resultType) {
-            case WCHTTPResultTypeZero:
-                dataResult = [WCZeroDataResult itemFromDict:result];
-                break;
-            default:
-                dataResult = [WCDataResult itemFromDict:result];
-                break;
-        }
+        dataResult = [req parseData:result];
     } else {
         if (request.asiRequest.responseStatusCode == 0) {
             dataResult = [WCDataResult resultForNetworkError];
@@ -80,6 +73,68 @@
         WCDataResult *result = [self sync:request];
         if (config) {
             config(result);
+        }
+        [self addBlockOnMainThread:^{
+            if (finish) {
+                finish(result);
+            }
+        }];
+    }];
+}
+
++ (void)asyncBlock:(WCDataRequest *(^)(void))request finish:(void (^)(WCDataResult *))finish
+{
+    [self asyncBlock:request config:nil finish:finish];
+}
+
++ (void)asyncBlock:(WCDataRequest *(^)(void))request config:(void (^)(WCDataResult *))config finish:(void (^)(WCDataResult *))finish
+{
+    if (request) {
+        [self async:request() config:config finish:finish];
+    }
+}
+
++ (void)loadCache:(void (^)(WCDataResult *cache))cacheBlock
+           forKey:(NSString *)cacheKey
+{
+    [self addBlockOnGlobalThread:^{
+        WCDataResult *cache = nil;
+        if (cacheKey && cacheBlock) {
+            cache = [[BPCacheManager sharedInstance] cacheForKey:cacheKey];
+        }
+        [self addBlockOnMainThread:^{
+            if (cacheBlock) {
+                cacheBlock(cache);
+            }
+        }];
+    }];
+}
+
++ (void)async:(WCDataRequest *)request
+     cacheKey:(NSString *)cacheKey
+    loadCache:(void (^)(WCDataResult *cache))cacheBlock
+       finish:(void (^)(WCDataResult *result))finish
+{
+    if (cacheBlock) {
+        [self loadCache:^(WCDataResult *cache) {
+            if (cacheBlock) {
+                cacheBlock(cache);
+            }
+            [self async:request cacheKey:cacheKey finish:finish];
+        } forKey:cacheKey];
+    } else {
+        [self async:request cacheKey:cacheKey finish:finish];
+    }
+}
+
++ (void)async:(WCDataRequest *)request
+     cacheKey:(NSString *)cacheKey
+       finish:(void (^)(WCDataResult *result))finish
+{
+    [self addBlockOnGlobalThread:^{
+        WCDataResult *result = [self sync:request];
+        if (result.success && cacheKey) {
+            [[BPCacheManager sharedInstance] setCache:result forKey:cacheKey];
         }
         [self addBlockOnMainThread:^{
             if (finish) {

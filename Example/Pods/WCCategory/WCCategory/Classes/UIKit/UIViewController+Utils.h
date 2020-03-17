@@ -21,6 +21,8 @@
 @property (nonatomic) CGRect frame;
 @property (nonatomic) CGFloat alpha;
 
+@property (nonatomic, strong) UIColor *backgroundColor;
+
 - (CGRect)bounds;
 - (void)addSubview:(id)view;
 

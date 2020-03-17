@@ -13,6 +13,8 @@
 extern NSString *FFPlaceholderChar(void);
 extern NSString *FFHighlightColorStr(NSString *string);
 
+extern NSString *FFURLEncode(NSString *input);
+
 @interface NSString (Utils)
 - (BOOL)isMobileNumber;
 - (NSString *)removePhoneHeader;

@@ -8,6 +8,7 @@
 
 #import "UITableView+Utils.h"
 #import <objc/runtime.h>
+#import "WCCategory+UI.h"
 
 @implementation UITableView (Utils)
 
@@ -65,6 +66,33 @@
     height += ([self totalHeightForHeaderToSection:indexPath.section + 1 target:target]);
     height += ([self totalHeightForFooterToSection:indexPath.section target:target]);
     return height;
+}
+
+- (void)setTableHeaderHeight:(CGFloat)height
+{
+    if (self.tableHeaderView) {
+        self.tableHeaderView.height = height;
+    } else {
+        UIView *view = [UIView clearColorView:CGRectMake(0, 0, self.width, height)];
+        self.tableHeaderView = view;
+    }
+}
+
+- (void)setTableFooterHeight:(CGFloat)height
+{
+    if (self.tableFooterView) {
+        self.tableFooterView.height = height;
+    } else {
+        UIView *view = [UIView clearColorView:CGRectMake(0, 0, self.width, height)];
+        self.tableFooterView = view;
+    }
+    
+}
+
+- (void)setTableHeaderHeight:(CGFloat)hHeight footerHeight:(CGFloat)fHeight
+{
+    [self setTableHeaderHeight:hHeight];
+    [self setTableFooterHeight:fHeight];
 }
 
 @end

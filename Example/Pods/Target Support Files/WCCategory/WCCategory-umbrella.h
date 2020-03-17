@@ -35,6 +35,7 @@
 #import "UIView+Utils.h"
 #import "UIViewController+Utils.h"
 #import "WCCategory+UI.h"
+#import "WCQuickUI.h"
 
 FOUNDATION_EXPORT double WCCategoryVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCCategoryVersionString[];

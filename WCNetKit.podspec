@@ -43,6 +43,7 @@ Pod::Spec.new do |s|
   # s.frameworks = 'UIKit', 'MapKit'
    s.dependency 'WCCategory'
    s.dependency 'WCModel/Entity'
+   s.dependency 'WCModel/Cache'
    s.dependency 'WCEncrypt/MD5'
    s.dependency 'WCModule/ASIHttpRequest'
 end

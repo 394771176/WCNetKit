@@ -24,28 +24,6 @@
     return reqUrl;
 }
 
-- (NSMutableDictionary *)requestParams
-{
-    NSMutableDictionary *params = nil;
-    if (_params && [_params isKindOfClass:NSMutableDictionary.class]) {
-        params = (id)_params;
-    } else {
-        if (_params) {
-            params = [NSMutableDictionary dictionaryWithDictionary:_params];
-        } else {
-            params = [NSMutableDictionary dictionary];
-        }
-    }
-    if (_needSystemParams) {
-        [params addEntriesFromDictionary:[WCNetManager systemParams]];
-    }
-    if (_needToken) {
-        [WCNetManager setUserTokenParams:params];
-    }
-
-    return params;
-}
-
 //+ (NSString *)getImageContentTypeWithData:(NSData *)data
 //{
 //    SDImageFormat imageFormat = [NSData sd_imageFormatForImageData:data];
@@ -115,9 +93,36 @@
     }
 }
 
+- (NSString *)requestUrl
+{
+    return [self.class requestUrlWithServer:_serverUrl api:_api];
+}
+
+- (NSMutableDictionary *)requestParams
+{
+    NSMutableDictionary *params = nil;
+    if (_params && [_params isKindOfClass:NSMutableDictionary.class]) {
+        params = (id)_params;
+    } else {
+        if (_params) {
+            params = [NSMutableDictionary dictionaryWithDictionary:_params];
+        } else {
+            params = [NSMutableDictionary dictionary];
+        }
+    }
+    if (_needSystemParams) {
+        [params addEntriesFromDictionary:[WCNetManager systemParams]];
+    }
+    if (_needToken) {
+        [WCNetManager setUserTokenParams:params];
+    }
+    
+    return params;
+}
+
 - (BPURLRequest *)makeRequest
 {
-    NSString *reqUrl = [self.class requestUrlWithServer:_serverUrl api:_api];
+    NSString *reqUrl = [self requestUrl];
     if (!reqUrl) {
         return nil;
     }
@@ -135,6 +140,20 @@
         request.asiRequest.timeOutSeconds = _timeOut;
     }
     return request;
+}
+
+- (WCDataResult *)parseData:(id)data
+{
+    WCDataResult *result = nil;
+    switch (self.resultType) {
+        case WCHTTPResultTypeZero:
+            result = [WCZeroDataResult itemFromDict:result];
+            break;
+        default:
+            result = [WCDataResult itemFromDict:result];
+            break;
+    }
+    return result;
 }
 
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params
@@ -190,6 +209,7 @@
     request.serverUrl = url;
     request.api = api;
     request.params = params;
+    request.httpMethod = httpMethod;
     request.signKey = signKey;
     request.contentType = contentType;
     request.resultType = resultType;

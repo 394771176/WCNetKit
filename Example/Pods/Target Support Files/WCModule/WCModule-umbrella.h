@@ -37,8 +37,15 @@
 #import "ASIS3ObjectRequest.h"
 #import "ASIS3Request.h"
 #import "ASIS3ServiceRequest.h"
+#import "FMDatabase.h"
+#import "FMDatabaseAdditions.h"
+#import "FMDatabasePool.h"
+#import "FMDatabaseQueue.h"
+#import "FMDB.h"
+#import "FMResultSet.h"
 #import "DTReachabilityUtil.h"
 #import "Reachability.h"
+#import "RegexKitLite.h"
 
 FOUNDATION_EXPORT double WCModuleVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCModuleVersionString[];

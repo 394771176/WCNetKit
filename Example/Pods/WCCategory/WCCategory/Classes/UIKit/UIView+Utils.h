@@ -63,7 +63,11 @@
 
 // 增加点击事件
 - (void)addTarget:(id)target singleTapAction:(SEL)action;
+- (void)addTarget:(id)target singleTapAction:(SEL)action tapCount:(NSInteger)tapCount;
 - (void)addTarget:(id)target longPressAction:(SEL)action;
+- (void)addTarget:(id)target longPressAction:(SEL)action duration:(CGFloat)duration;
+- (void)addTarget:(id)target panAction:(SEL)action;
+
 
 - (void)setLayerBorderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor;
 - (void)setLayerBorderWidth:(CGFloat)borderWidth borderColorStr:(NSString *)borderColorStr;

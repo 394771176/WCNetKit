@@ -13,6 +13,7 @@
 #import "BPURLRequest.h"
 #import "WCDataRequest.h"
 #import "WCDataService.h"
+#import "WCNetKit.h"
 #import "WCNetManager.h"
 #import "WCNetProtocol.h"
 

@@ -46,7 +46,7 @@
 
 #define CELL_ID(str)        static NSString *cellId = @#str;
 
-#define URL(str)            [NSURL URLWithString:@#str]
+#define URL(str)            [NSURL URLWithString:str]
 
 #define RGB(r, g, b)        RGBA(r, g, b, 1)
 #define RGBA(r, g, b, a)    [UIColor colorWithRed:(float)(r)/255.0 green:(float)(g)/255.0 blue:(float)(b)/255.0 alpha:a]
@@ -61,6 +61,7 @@
 #if __has_include(<WCCategory/WCCategory+UI.h>)
 
 #define COLOR(str)          [UIColor colorWithHexString:@#str]
+#define COLORS(str)         [UIColor colorWithHexString:str]
 
 #endif
 
@@ -73,7 +74,14 @@
 #define SCALE_SCREEN_SIZE_PHONE(size)           ceil(MIN(SCREEN_WIDTH, 414.f)/375*(size))
 #define SCALE_SCREEN_SIZE_PAD(size)             ceil(MIN(SCREEN_WIDTH, 600.f)/375*(size))
 
-#define WEAK_SELF      __weak __typeof(&*self)weakSelf = self;
+#define WEAK_SELF        __weak   __typeof(&*self) weakSelf = self;
+#define STRONG_SELF      __strong __typeof(&*self) self = weakSelf;
+
+#define kWeakObj(obj)   __weak typeof(obj) weak##obj = obj;
+#define kStrongObj(obj)    __strong typeof(obj) obj = weak##obj;
+
+#define PATH(name)  [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:name]
+#define BUNDLE(name, type)  [[NSBundle mainBundle] pathForResource:name ofType:type]
 
 #define WC_Swizzle(_method1_, _method2_) \
 { \

@@ -95,6 +95,16 @@
     self.view.alpha = alpha;
 }
 
+- (UIColor *)backgroundColor
+{
+    return self.view.backgroundColor;
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor
+{
+    self.view.backgroundColor = backgroundColor;
+}
+
 - (CGRect)bounds
 {
     return self.view.bounds;

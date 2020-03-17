@@ -7,7 +7,7 @@
 //
 
 #import "WCBaseEntity.h"
-#import "WCCategory.h"
+#import <WCCategory/WCCategory.h>
 
 @implementation WCBaseEntity
 

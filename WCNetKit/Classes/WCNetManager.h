@@ -8,10 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <WCCategory/WCCategory.h>
-#import <WCEncrypt/NSString+md5.h>
-#import <WCModule/DTReachabilityUtil.h>
 #import "WCNetProtocol.h"
-#import "WCDataService.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +23,6 @@ SHARED_INSTANCE_H
 + (void)setup:(id<WCNetManagerProtocol>)manager;
 
 + (NSString *)createUserAgent;
-
 
 #pragma mark - WCNetManagerProtocol
 

@@ -262,15 +262,34 @@
 }
 
 - (void)addTarget:(id)target singleTapAction:(SEL)action {
+    [self addTarget:target singleTapAction:action tapCount:1];
+}
+
+- (void)addTarget:(id)target singleTapAction:(SEL)action tapCount:(NSInteger)tapCount
+{
     self.userInteractionEnabled = YES;
-    [self addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:target action:action]];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    tap.numberOfTapsRequired = tapCount;
+    [self addGestureRecognizer:tap];
 }
 
 - (void)addTarget:(id)target longPressAction:(SEL)action {
-    self.userInteractionEnabled = YES;
-    [self addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:target action:action]];
+    [self addTarget:target longPressAction:action duration:0.5];
 }
 
+- (void)addTarget:(id)target longPressAction:(SEL)action duration:(CGFloat)duration
+{
+    self.userInteractionEnabled = YES;
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:target action:action];
+    longPress.minimumPressDuration = duration;
+    [self addGestureRecognizer:longPress];
+}
+
+- (void)addTarget:(id)target panAction:(SEL)action {
+    self.userInteractionEnabled = YES;
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:action];
+    [self addGestureRecognizer:pan];
+}
 - (void)setLayerBorderWidth:(CGFloat)borderWidth borderColor:(UIColor *)borderColor
 {
     [self setLayerBorderWidth:borderWidth borderColor:borderColor cornerRadius:0.f];

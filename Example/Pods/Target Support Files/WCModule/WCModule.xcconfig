@@ -1,7 +1,7 @@
 CONFIGURATION_BUILD_DIR = ${PODS_CONFIGURATION_BUILD_DIR}/WCModule
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) $(SDKROOT)/usr/include/libxml2 $(SDKROOT)/usr/include/libz
-OTHER_LDFLAGS = $(inherited) -l"xml2" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "Foundation" -framework "MobileCoreServices" -framework "SystemConfiguration"
+OTHER_LDFLAGS = $(inherited) -l"icucore" -l"sqlite3" -l"xml2" -l"z" -framework "CFNetwork" -framework "CoreGraphics" -framework "Foundation" -framework "MobileCoreServices" -framework "SystemConfiguration"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_ROOT = ${SRCROOT}

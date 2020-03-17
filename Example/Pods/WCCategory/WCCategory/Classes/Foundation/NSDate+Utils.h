@@ -17,6 +17,7 @@
 #define yyyyMMddDot             @"yyyy.MM.dd"           // 2016.02.03
 #define yyyyMMddHHmmChinese     @"yyyy年MM月dd日 HH:mm"     // 2016-02-03 08:03
 
+extern NSTimeInterval WCTimeIntervalWithSecondsSince1970(void);
 /*
  常见用法：
  NSDate、CFAbsoluteTimeGetCurrent（）常用于日常时间、时间戳的表示，与服务器之间的数据交互

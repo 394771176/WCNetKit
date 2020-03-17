@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <WCModel/WCDataResult.h>
 #import "BPURLRequest.h"
 
 #define WCHTTPMethodGET   @"GET"
@@ -30,6 +31,7 @@ typedef NS_ENUM(NSInteger, WCHTTPResultType) {
 @property (nonatomic, strong) NSString *serverUrl;//请求地址
 @property (nonatomic, strong) NSString *api;//请求API
 @property (nonatomic, strong) NSDictionary *params;//请求参数
+@property (nonatomic, strong) NSArray *paramsArray;//请求参数,支持定序，同名多参
 @property (nonatomic, strong) NSString *signKey;//签名
 
 @property (nonatomic, strong) NSString *httpMethod;//默认GET
@@ -43,7 +45,11 @@ typedef NS_ENUM(NSInteger, WCHTTPResultType) {
 
 @property (nonatomic, weak) id<BPURLRequestDelegate> delegate;
 
+- (NSString *)requestUrl;
+- (NSMutableDictionary *)requestParams;
+
 - (BPURLRequest *)makeRequest;
+- (WCDataResult *)parseData:(id)data;
 
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params;
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod;

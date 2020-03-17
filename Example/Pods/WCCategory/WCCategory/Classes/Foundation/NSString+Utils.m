@@ -20,6 +20,10 @@ NSString *FFHighlightColorStr(NSString *string)
     return [string hlightedColorStr];
 }
 
+NSString *FFURLEncode(NSString *input) {
+    return [input urlEncoded];
+}
+
 @implementation NSString (Utils)
 
 + (NSString *)createUUID
@@ -426,28 +430,32 @@ NSString *FFHighlightColorStr(NSString *string)
 
 - (NSURL *)serializeURLWithParams:(NSDictionary *)params httpMethod:(NSString *)httpMethod {
     
-    if (params==nil) {
-        return [NSURL URLWithString:self];
-    }
-    
     NSURL* parsedURL = [NSURL URLWithString:self];
-    NSString* queryPrefix = parsedURL.query ? @"&" : @"?";
+    if (params==nil || params.count <= 0) {
+        return parsedURL;
+    }
     
     NSMutableArray* pairs = [NSMutableArray array];
     for (NSString* key in [params keyEnumerator]) {
-        if (([[params valueForKey:key] isKindOfClass:[UIImage class]])
-            ||([[params valueForKey:key] isKindOfClass:[NSData class]])) {
+        id obj = [params valueForKey:key];
+        if (([obj isKindOfClass:[UIImage class]])
+            ||([obj isKindOfClass:[NSData class]])) {
             NSAssert(![httpMethod isEqualToString:@"GET"], @"can not use GET to upload a file");
             continue;
+        } else if ([obj isKindOfClass:NSNumber.class]) {
+            obj = [obj stringValue];
         }
         
-        CFStringRef escaped_value = CFURLCreateStringByAddingPercentEscapes(NULL, (__bridge CFStringRef)[params objectForKey:key], NULL, (CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8);
-        [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, escaped_value]];
-        CFRelease(escaped_value);
+        [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, [obj urlEncoded]]];
     }
-    NSString* query = [pairs componentsJoinedByString:@"&"];
     
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", self, queryPrefix, query]];
+    if (pairs.count) {
+        NSString* queryPrefix = parsedURL.query ? @"&" : @"?";
+        NSString* query = [pairs componentsJoinedByString:@"&"];
+        return [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@", self, queryPrefix, query]];
+    } else {
+        return parsedURL;
+    }
 }
 
 ////MARK: - attributedString

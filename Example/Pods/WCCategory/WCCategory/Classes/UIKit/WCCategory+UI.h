@@ -24,4 +24,6 @@
 #import "UIView+animation.h"
 #import "UINavigationController+PopAfterPush.h"
 
+#import "WCQuickUI.h"
+
 #endif /* WCCategory_UI_h */

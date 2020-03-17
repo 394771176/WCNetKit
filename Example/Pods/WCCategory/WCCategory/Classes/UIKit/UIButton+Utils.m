@@ -248,6 +248,30 @@ static char leftNameKey;
     }
 }
 
+- (void)setSelectedImageWithImageName:(NSString *)imageName
+{
+    if (imageName) {
+        [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
+    } else {
+        [self setImage:nil forState:UIControlStateSelected];
+    }
+}
+
+- (void)setHighlightedImageWithImageName:(NSString *)imageName
+{
+    if (imageName) {
+        [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateHighlighted];
+    } else {
+        [self setImage:nil forState:UIControlStateHighlighted];
+    }
+}
+
+- (void)setImageWithImageName:(NSString *)imageName selImageName:(NSString *)selImgName
+{
+    [self setImageWithImageName:imageName];
+    [self setSelectedImageWithImageName:selImgName];
+}
+
 - (void)setBackgroundImageWithImageName:(NSString *)imageName
 {
     if (imageName) {
