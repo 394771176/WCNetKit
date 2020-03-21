@@ -8,7 +8,9 @@
 
 #import "BPURLRequest.h"
 #import <CommonCrypto/CommonDigest.h>
-#import "WCNetKit.h"
+#import <WCEncrypt/NSString+md5.h>
+#import <WCModule/DTReachabilityUtil.h>
+#import "WCNetManager.h"
 
 NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 

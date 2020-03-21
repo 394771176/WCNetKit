@@ -8,12 +8,6 @@
 #ifndef WCNetKit_h
 #define WCNetKit_h
 
-#import <WCCategory/WCCategory.h>
-#import <WCEncrypt/NSString+md5.h>
-#import <WCModule/DTReachabilityUtil.h>
-#import <WCModel/WCDataResult.h>
-#import <WCModel/BPCacheManager.h>
-
 #import "BPURLRequest.h"
 #import "WCDataRequest.h"
 #import "WCDataService.h"

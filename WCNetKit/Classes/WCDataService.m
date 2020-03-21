@@ -7,7 +7,9 @@
 //
 
 #import "WCDataService.h"
-#import "WCNetKit.h"
+#import "WCNetManager.h"
+#import <WCModule/DTReachabilityUtil.h>
+#import <WCModel/BPCacheManager.h>
 
 @implementation WCDataService
 

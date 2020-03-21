@@ -7,7 +7,7 @@
 //
 
 #import "WCNetManager.h"
-#import <UIKit/UIKit.h>
+#import <WCCategory/WCCategory.h>
 
 @interface WCNetManager ()
 {
