@@ -147,10 +147,10 @@
     WCDataResult *result = nil;
     switch (self.resultType) {
         case WCHTTPResultTypeZero:
-            result = [WCZeroDataResult itemFromDict:result];
+            result = [WCZeroDataResult itemFromDict:data];
             break;
         default:
-            result = [WCDataResult itemFromDict:result];
+            result = [WCDataResult itemFromDict:data];
             break;
     }
     return result;
