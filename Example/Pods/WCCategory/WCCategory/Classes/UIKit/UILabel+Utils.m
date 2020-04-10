@@ -103,7 +103,12 @@
 
 - (void)setText:(NSString *)text highLightTextArray:(NSArray *)highLightTextArray withColor:(UIColor *)color
 {
-    if (text && color) {
+    [self setText:text highLightTextArray:highLightTextArray withColor:color font:nil];
+}
+
+- (void)setText:(NSString *)text highLightTextArray:(NSArray *)highLightTextArray withColor:(UIColor *)color font:(UIFont *)font
+{
+    if (text && (color || font)) {
         NSMutableAttributedString *mString = [NSMutableAttributedString stringWithString:text];
         NSInteger loc = 0;
         NSString *ctext = [text copy];
@@ -111,7 +116,12 @@
             NSRange range = [ctext rangeOfString:string];
             if (range.length>0) {
                 range.location = loc+range.location;
-                [mString addAttributeColor:color range:range];
+                if (color) {
+                    [mString addAttributeColor:color range:range];
+                }
+                if (font) {
+                    [mString addAttributeFont:font range:range];
+                }
                 
                 //从后面截断，防止高亮数字有相同的，比如 @[@"500", @"0"] 都有0
                 loc = range.location+range.length;

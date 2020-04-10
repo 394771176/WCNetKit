@@ -12,6 +12,13 @@
 #define DOC_PATH            ([NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject])
 #define DOCPATH(name)       ([DOC_PATH stringByAppendingPathComponent:name])
 
+#define PATH(name)  [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:name]
+#define BUNDLE(name, type)  [[NSBundle mainBundle] pathForResource:name ofType:type]
+
+extern NSString * readTxtFromPath(NSString *path);
+
+extern void writeTxtToPath(NSString *text, NSString *path);
+
 @interface DTFileManager : NSObject
 
 // 宏 path

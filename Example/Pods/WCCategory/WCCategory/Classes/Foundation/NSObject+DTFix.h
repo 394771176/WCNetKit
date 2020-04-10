@@ -13,10 +13,10 @@
 
 @end
 
-@interface NSArray (DTFixArray)
+@interface NSArray (DTFix)
 
 @end
 
-@interface NSDictionary (DTFixDict)
+@interface NSDictionary (DTFix)
 
 @end

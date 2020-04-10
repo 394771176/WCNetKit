@@ -8,11 +8,7 @@
 
 #import "BPURLRequest.h"
 #import <CommonCrypto/CommonDigest.h>
-#import <WCEncrypt/NSString+md5.h>
-#import <WCModule/DTReachabilityUtil.h>
 #import "WCNetManager.h"
-
-NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 
 @interface BPURLRequest() <ASIHTTPRequestDelegate, ASIProgressDelegate> {
     double progress;
@@ -23,6 +19,11 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 @implementation BPURLRequest
 
 @synthesize delegate, url, httpMethod, params, responseData, asiRequest;
+
++ (NSString *)userAgent
+{
+    return [WCNetManager sharedInstance].userAgent;
+}
 
 + (BPURLRequest *)getRequestWithParams:(NSMutableDictionary *)params 
                                 httpMethod:(NSString *)httpMethod 
@@ -57,7 +58,7 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
     if (delegate) {
         asiRequest.delegate = request;
     }
-    asiRequest.userAgentString = [WCNetManager userAgent];
+    asiRequest.userAgentString = [self userAgent];
     request.asiRequest = asiRequest;
     return request;
 }
@@ -84,7 +85,7 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
     if (delegate) {
         asiRequest.delegate = request;
     }
-    asiRequest.userAgentString = [WCNetManager userAgent];
+    asiRequest.userAgentString = [self userAgent];
     request.asiRequest = asiRequest;
     return request;
 }
@@ -118,7 +119,7 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
     if (delegate) {
         asiRequest.delegate = request;
     }
-    asiRequest.userAgentString = [WCNetManager userAgent];
+    asiRequest.userAgentString = [self userAgent];
     request.asiRequest = asiRequest;
     return request;
 }
@@ -184,33 +185,54 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
     return result;
 }
 
-- (void)sign
+- (NSString *)getSignName
 {
-    NSString *link = [asiRequest.url description];
+    return @"sign";
+}
+
+- (NSString *)getSignValueForUrlStr:(NSString *)urlStr httpMethod:(NSString *)httpMethod
+{
+    if (!urlStr || !_signKey) {
+        return nil;
+    }
+    NSString *link = urlStr;
     NSRange range = [link rangeOfString:@"?"];
-    if (range.length>0||[[httpMethod uppercaseString] isEqualToString:@"POST"]) {
-        NSString *par = nil;
+    if (range.length>0||[[httpMethod uppercaseString] isEqualToString:WCHTTPMethodPOST]) {
+        NSString *pair = nil;
         if (range.length==0) {
             link = [link stringByAppendingString:@"?"];
-            par = @"";
+            pair = @"";
         } else {
-            par = [link substringFromIndex:range.location+1];
+            pair = [link substringFromIndex:range.location+1];
         }
         
-        NSString *getSign = [[[[par stringByAppendingString:@"&"] md5Hash] stringByAppendingString:_signKey] md5Hash];
+        NSString *getSign = [[[[pair stringByAppendingString:@"&"] md5Hash] stringByAppendingString:_signKey] md5Hash];
         if ([[httpMethod uppercaseString] isEqualToString:@"POST"]) {
             unsigned char result[CC_MD5_DIGEST_LENGTH];
             [asiRequest buildPostBody];
             CC_MD5([asiRequest.postBody bytes], (CC_LONG)[asiRequest.postBody length], result);
             NSString *bodyMD5 = [NSString stringWithFormat:
-             @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-             result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
-             result[8], result[9], result[10], result[11], result[12], result[13], result[14], result[15]
-             ];
-            NSString *sign = [[getSign stringByAppendingString:[[bodyMD5 stringByAppendingString:_signKey] md5Hash]] md5Hash];
-            asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&_sign=%@", link, sign]];
+                                 @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
+                                 result[0], result[1], result[2], result[3], result[4], result[5], result[6], result[7],
+                                 result[8], result[9], result[10], result[11], result[12], result[13], result[14], result[15]
+                                 ];
+            NSString *postSign = [[getSign stringByAppendingString:[[bodyMD5 stringByAppendingString:_signKey] md5Hash]] md5Hash];
+            return postSign;
         } else {
-            asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&_sign=%@", link, getSign]];
+            return getSign;
+        }
+    }
+    return nil;
+}
+
+- (void)sign
+{
+    NSString *signName = [self getSignName];
+    NSString *link = [asiRequest.url description];
+    if (signName.length && link.length && _signKey.length) {
+        NSString *signValue = [self getSignValueForUrlStr:link httpMethod:self.httpMethod];
+        if (signValue.length) {
+            asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@=%@", link, signName, signValue]];
         }
     }
 }
@@ -227,10 +249,6 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 
 - (id)startSynchronous
 {
-    if (![[Reachability reachabilityForInternetConnection] isReachable]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:APP_EVENT_NETWORK_ERROR object:nil];
-        return nil;
-    }
     if ([self getProxyStatus]) {
         return nil;
     }
@@ -252,10 +270,6 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 
 - (id)startSynchronousForResponseData
 {
-    if (![[Reachability reachabilityForInternetConnection] isReachable]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:APP_EVENT_NETWORK_ERROR object:nil];
-        return nil;
-    }
     if ([self getProxyStatus]) {
         return nil;
     }
@@ -272,10 +286,6 @@ NSString *const APP_EVENT_NETWORK_ERROR = @"app.event.network.error";
 
 - (void)startAsynchronous
 {
-    if (![[Reachability reachabilityForInternetConnection] isReachable]) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:APP_EVENT_NETWORK_ERROR object:nil];
-        return;
-    }
     if ([self getProxyStatus]) {
         return;
     }

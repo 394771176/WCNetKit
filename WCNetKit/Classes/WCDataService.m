@@ -27,30 +27,21 @@
     });
 }
 
-+ (WCDataResult *)getResultWith:(BPURLRequest *)request
-{
-    return nil;
-}
-
 // 同步请求
-+ (WCDataResult *)sync:(WCDataRequest *)req
++ (WCDataResult *)sync:(WCDataRequest *)request
 {
     if (![DTReachabilityUtil sharedInstance].isReachable) {
         return [WCDataResult resultForNetworkError];
     }
     
-    if (req.needToken && ![WCNetManager userToken]) {
-        return [WCDataResult resultForUnloginError];
-    }
-    
-    BPURLRequest *request = [req makeRequest];
-    id result = [request startSynchronous];
+    BPURLRequest *urlRequest = [request makeRequest];
+    id result = [urlRequest startSynchronous];
     
     WCDataResult *dataResult = nil;
     if (result) {
-        dataResult = [req parseData:result];
+        dataResult = [request parseData:result];
     } else {
-        if (request.asiRequest.responseStatusCode == 0) {
+        if (urlRequest.asiRequest.responseStatusCode == 0) {
             dataResult = [WCDataResult resultForNetworkError];
         } else {
             dataResult = [WCDataResult resultForServerError];

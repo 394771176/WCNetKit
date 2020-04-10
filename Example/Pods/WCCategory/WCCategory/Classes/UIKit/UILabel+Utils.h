@@ -41,6 +41,7 @@
 
 //高亮数组
 - (void)setText:(NSString *)text highLightTextArray:(NSArray *)highLightTextArray withColor:(UIColor *)color;
+- (void)setText:(NSString *)text highLightTextArray:(NSArray *)highLightTextArray withColor:(UIColor *)color font:(UIFont *)font;
 
 - (void)setText:(NSString *)text withLineSpace:(float)lineSpace;
 - (void)setText:(NSString *)text withWordSpace:(float)wordSpace;

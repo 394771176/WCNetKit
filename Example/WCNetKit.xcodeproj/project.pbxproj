@@ -326,7 +326,6 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WCNetKit_Example/Pods-WCNetKit_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/WCCategory/WCCategory.framework",
-				"${BUILT_PRODUCTS_DIR}/WCEncrypt/WCEncrypt.framework",
 				"${BUILT_PRODUCTS_DIR}/WCModel/WCModel.framework",
 				"${BUILT_PRODUCTS_DIR}/WCModule/WCModule.framework",
 				"${BUILT_PRODUCTS_DIR}/WCNetKit/WCNetKit.framework",
@@ -334,7 +333,6 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WCCategory.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WCEncrypt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WCModel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WCModule.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WCNetKit.framework",

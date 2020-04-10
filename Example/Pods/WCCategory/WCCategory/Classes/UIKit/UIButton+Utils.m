@@ -299,7 +299,9 @@ static char leftNameKey;
 
 - (void)addTarget:(id)target action:(SEL)action
 {
-    [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    if (target && action && [target respondsToSelector:action]) {
+        [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 - (void)setTitleEdgeInsetsForIphoneX

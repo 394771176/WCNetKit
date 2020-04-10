@@ -46,6 +46,8 @@
 
 #define CELL_ID(str)        static NSString *cellId = @#str;
 
+#define KEY(str)        static NSString * const str = @#str;
+
 #define URL(str)            [NSURL URLWithString:str]
 
 #define RGB(r, g, b)        RGBA(r, g, b, 1)
@@ -80,6 +82,8 @@
 #define kWeakObj(obj)   __weak typeof(obj) weak##obj = obj;
 #define kStrongObj(obj)    __strong typeof(obj) obj = weak##obj;
 
+#define WCBarItem(view)   [[UIBarButtonItem alloc] initWithCustomView:view]
+
 #define PATH(name)  [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:name]
 #define BUNDLE(name, type)  [[NSBundle mainBundle] pathForResource:name ofType:type]
 
@@ -87,6 +91,13 @@
 { \
 Method originalInitMethod = class_getInstanceMethod(self, _method1_); \
 Method modifiedInitMethod = class_getInstanceMethod(self, _method2_); \
+method_exchangeImplementations(originalInitMethod, modifiedInitMethod); \
+}
+
+#define WC_Swizzle_Class(_method1_, _method2_) \
+{ \
+Method originalInitMethod = class_getClassMethod(self, _method1_); \
+Method modifiedInitMethod = class_getClassMethod(self, _method2_); \
 method_exchangeImplementations(originalInitMethod, modifiedInitMethod); \
 }
 

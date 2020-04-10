@@ -88,8 +88,12 @@
     if (!_contentTypeStr && typeStr) {
         _contentTypeStr = typeStr;
     }
-    if (_timeOut <= 0 && timeOut > 0) {
-        self.timeOut = timeOut;
+    if (_timeOut <= 0) {
+        if (timeOut > 0) {
+            self.timeOut = timeOut;
+        } else {
+            self.timeOut = [WCNetManager sharedInstance].defaultTimeOut;
+        }
     }
 }
 
@@ -110,13 +114,6 @@
             params = [NSMutableDictionary dictionary];
         }
     }
-    if (_needSystemParams) {
-        [params addEntriesFromDictionary:[WCNetManager systemParams]];
-    }
-    if (_needToken) {
-        [WCNetManager setUserTokenParams:params];
-    }
-    
     return params;
 }
 
@@ -186,24 +183,9 @@
 }
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType resultType:(WCHTTPResultType)resultType
 {
-    return [self requestWithUrl:url api:api params:params httpMethod:httpMethod signKey:signKey contentType:contentType resultType:resultType neetToken:NO needSystemParams:YES timeOut:0];
+    return [self requestWithUrl:url api:api params:params httpMethod:httpMethod signKey:signKey contentType:contentType resultType:resultType timeOut:0];
 }
-
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey neetToken:(BOOL)neetToken
-{
-    return [self requestWithUrl:url api:api params:params httpMethod:httpMethod signKey:signKey contentType:WCHTTPContentTypeDefault resultType:WCHTTPResultTypeDefault neetToken:neetToken needSystemParams:YES timeOut:0];
-}
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey needSystemParams:(BOOL)needSystemParams
-{
-    return [self requestWithUrl:url api:api params:params httpMethod:httpMethod signKey:signKey contentType:WCHTTPContentTypeDefault resultType:WCHTTPResultTypeDefault neetToken:NO needSystemParams:needSystemParams timeOut:0];
-}
-
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey resultType:(WCHTTPResultType)resultType needSystemParams:(BOOL)needSystemParams
-{
-    return [self requestWithUrl:url api:api params:params httpMethod:httpMethod signKey:signKey contentType:WCHTTPContentTypeDefault resultType:resultType neetToken:NO needSystemParams:needSystemParams timeOut:0];
-}
-
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType resultType:(WCHTTPResultType)resultType neetToken:(BOOL)neetToken needSystemParams:(BOOL)needSystemParams timeOut:(NSInteger)timeOut
++ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType resultType:(WCHTTPResultType)resultType timeOut:(NSInteger)timeOut
 {
     WCDataRequest *request = [[self alloc] init];
     request.serverUrl = url;
@@ -213,8 +195,6 @@
     request.signKey = signKey;
     request.contentType = contentType;
     request.resultType = resultType;
-    request.needToken = neetToken;
-    request.needSystemParams = needSystemParams;
     request.timeOut = timeOut;
     return request;
 }

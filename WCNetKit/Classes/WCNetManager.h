@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <WCCategory/WCCategory.h>
-#import "WCNetProtocol.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@protocol WCNetManagerProtocol <NSObject>
+
+@required
+
+@optional
+
+- (NSString *)userAgent;
+
+@end
 
 @interface WCNetManager : NSObject
 
@@ -18,23 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL enableProxy;//允许抓包
 @property (nonatomic, assign) NSInteger defaultTimeOut;//默认超时时长
 
-SHARED_INSTANCE_H
+@property (nonatomic, strong) NSString *userAgent;
 
-+ (void)setup:(id<WCNetManagerProtocol>)manager;
+SHARED_INSTANCE_H
 
 + (NSString *)createUserAgent;
 
-#pragma mark - WCNetManagerProtocol
-
-+ (NSString *)userAgent;
-
-+ (NSString *)userToken;
-
-//可以自定义token 的key, 不实现则用默认的key => ac_token
-+ (void)setUserTokenParams:(NSMutableDictionary *)params;
-
-+ (NSDictionary *)systemParams;
-
 @end
-
-NS_ASSUME_NONNULL_END

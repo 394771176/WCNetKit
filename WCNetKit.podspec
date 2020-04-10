@@ -28,8 +28,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = [
-  'WCNetKit/Classes/*'
+s.source_files = [
+  'WCNetKit/Classes/*.h',
+  'WCNetKit/Classes/*.m',
   ]
   
   # s.resource_bundles = {
@@ -40,10 +41,22 @@ Pod::Spec.new do |s|
    'WCNetKit/Classes/*.h'
    ]
    
+   # OpenUDID
+   s.subspec 'OpenUDID' do |udid|
+       udid.source_files = [
+       'WCNetKit/Classes/OpenUDID/*.h',
+       'WCNetKit/Classes/OpenUDID/*.m',
+       ]
+       udid.public_header_files = [
+       'WCNetKit/Classes/OpenUDID/*.h',
+       ]
+       udid.requires_arc = false
+   end
+   
   # s.frameworks = 'UIKit', 'MapKit'
-   s.dependency 'WCCategory'
-   s.dependency 'WCModel/Entity'
-   s.dependency 'WCModel/Cache'
-   s.dependency 'WCEncrypt/MD5'
-   s.dependency 'WCModule/ASIHttpRequest'
+  s.dependency 'WCCategory'
+  s.dependency 'WCModel/Entity'
+  s.dependency 'WCModel/Cache'
+  s.dependency 'WCModule/ASIHttpRequest'
+  
 end

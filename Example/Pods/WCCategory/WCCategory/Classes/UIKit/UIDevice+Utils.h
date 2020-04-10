@@ -10,6 +10,15 @@
 
 @interface UIDevice (Utils)
 
++ (NSString *)machineModel;
++ (NSString *)machineModelName;
+
++ (NSString *)clientUDID;
+
++ (NSString *)createUUID;
+
++ (BOOL)isJailbroken;
+
 + (BOOL)isIPhoneX;
 
 @end

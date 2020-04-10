@@ -18,19 +18,24 @@
 
 @implementation WCNetManager
 
-static id<WCNetManagerProtocol> wcManager = nil;
-
-+ (void)setup:(id<WCNetManagerProtocol>)manager
-{
-    wcManager = manager;
-}
-
-+ (id<WCNetManagerProtocol>)sharedManager
-{
-    return wcManager;
-}
-
 SHARED_INSTANCE_M
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (NSString *)userAgent
+{
+    if (!_userAgent) {
+        return [self.class createUserAgent];
+    }
+    return _userAgent;
+}
 
 static NSString *User_Agent = nil;
 
@@ -56,57 +61,6 @@ static NSString *User_Agent = nil;
         }
     }
     return User_Agent;
-}
-
-#pragma mark - WCNetManagerDelegate
-
-    
-+ (BOOL)respondsMethod:(SEL)sel
-{
-    return (wcManager && [wcManager respondsToSelector:sel]);
-}
-    
-+ (id)getReturnValueForMethod:(SEL)sel
-{
-    if ([self respondsMethod:sel]) {
-//        IMP imp = [(NSObject *)wcManager methodForSelector:sel];
-//        id (*func)(id, SEL) = (void *)imp;
-//        id result = func(wcManager, sel);
-//        return result;
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        return [wcManager performSelector:sel];
-#pragma clang diagnostic pop
-    }
-    return nil;
-}
-
-+ (NSString *)userAgent
-{
-    if ([self respondsMethod:@selector(userAgent)]) {
-        return [self getReturnValueForMethod:@selector(userAgent)];
-    } else {
-        return [self createUserAgent];
-    }
-}
-
-+ (NSString *)userToken
-{
-    return [self getReturnValueForMethod:@selector(userToken)];
-}
-
-+ (void)setUserTokenParams:(NSMutableDictionary *)params
-{
-    if (wcManager && [wcManager respondsToSelector:@selector(setUserTokenParams:)]) {
-        return [wcManager setUserTokenParams:params];
-    } else {
-        [params safeSetObject:[self userToken] forKey:@"ac_token"];
-    }
-}
-
-+ (NSDictionary *)systemParams
-{
-    return [self getReturnValueForMethod:@selector(systemParams)];
 }
 
 @end

@@ -38,6 +38,8 @@
 - (void)setTop:(CGFloat)top andWidth:(CGFloat)width;
 - (void)setLeft:(CGFloat)left andWidth:(CGFloat)width;
 
+- (void)setBackgroundColorStr:(NSString *)backgroundColorStr;
+
 @end
 
 @interface UIView (Utils)

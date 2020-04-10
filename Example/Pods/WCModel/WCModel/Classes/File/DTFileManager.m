@@ -8,6 +8,19 @@
 
 #import "DTFileManager.h"
 
+
+NSString * readTxtFromPath(NSString *path)
+{
+    NSString *string = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    return string;
+}
+
+void writeTxtToPath(NSString *text, NSString *path)
+{
+    [text writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
+}
+
+
 @interface DTFileManager () {
     
 }

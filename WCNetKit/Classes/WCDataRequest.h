@@ -10,9 +10,6 @@
 #import <WCModel/WCDataResult.h>
 #import "BPURLRequest.h"
 
-#define WCHTTPMethodGET   @"GET"
-#define WCHTTPMethodPOST  @"POST"
-
 typedef NS_ENUM(NSInteger, WCHTTPContentType) {
     WCHTTPContentTypeDefault,
     WCHTTPContentTypeImage,
@@ -39,8 +36,6 @@ typedef NS_ENUM(NSInteger, WCHTTPResultType) {
 @property (nonatomic, assign) WCHTTPContentType contentType;//常用的内容类型
 @property (nonatomic, assign) WCHTTPResultType resultType;//请求结果类型
 
-@property (nonatomic, assign) BOOL needToken;//是否需要登录
-@property (nonatomic, assign) BOOL needSystemParams;//是否需要系统参数
 @property (nonatomic, assign) NSInteger timeOut;//超时时间设定
 
 @property (nonatomic, weak) id<BPURLRequestDelegate> delegate;
@@ -59,9 +54,6 @@ typedef NS_ENUM(NSInteger, WCHTTPResultType) {
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType;
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey resultType:(WCHTTPResultType)resultType;
 + (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType resultType:(WCHTTPResultType)resultType;
-
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey neetToken:(BOOL)neetToken;
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey needSystemParams:(BOOL)needSystemParams;
-+ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey resultType:(WCHTTPResultType)resultType needSystemParams:(BOOL)needSystemParams;
++ (instancetype)requestWithUrl:(NSString *)url api:(NSString *)api params:(NSDictionary *)params httpMethod:(NSString *)httpMethod signKey:(NSString *)signKey contentType:(WCHTTPContentType)contentType resultType:(WCHTTPResultType)resultType timeOut:(NSInteger)timeOut;
 
 @end

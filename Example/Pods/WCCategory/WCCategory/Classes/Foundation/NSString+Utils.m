@@ -26,21 +26,6 @@ NSString *FFURLEncode(NSString *input) {
 
 @implementation NSString (Utils)
 
-+ (NSString *)createUUID
-{
-    // Create universally unique identifier (object)
-    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
-    
-    // Get the string representation of CFUUID object.
-    CFStringRef cfStr = CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
-    NSString *uuidStr = (__bridge NSString *)cfStr;
-    
-    CFRelease(uuidObject);
-    CFRelease(cfStr);
-    
-    return uuidStr;
-}
-
 - (BOOL)isMobileNumber
 {
     NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
@@ -446,7 +431,13 @@ NSString *FFURLEncode(NSString *input) {
             obj = [obj stringValue];
         }
         
-        [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, [obj urlEncoded]]];
+        if ([obj isKindOfClass:NSArray.class]) {
+            for (id subObj in (NSArray *)obj) {
+                [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, [subObj urlEncoded]]];
+            }
+        } else {
+            [pairs addObject:[NSString stringWithFormat:@"%@=%@", key, [obj urlEncoded]]];
+        }
     }
     
     if (pairs.count) {

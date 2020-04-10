@@ -37,7 +37,7 @@
 
 @end
 
-@implementation NSArray (DTFixArray)
+@implementation NSArray (DTFix)
 
 //不可变数组，添加元素
 - (void)addObject:(id)object
@@ -140,7 +140,7 @@
 
 @end
 
-@implementation NSDictionary (DTFixDict)
+@implementation NSDictionary (DTFix)
 
 //不可变字典，添加key value
 - (void)setObject:(id)anObject forKey:(NSString *)aKey

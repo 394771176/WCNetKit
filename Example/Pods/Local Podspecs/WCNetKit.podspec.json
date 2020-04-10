@@ -1,6 +1,6 @@
 {
   "name": "WCNetKit",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "summary": "A short description of WCNetKit.",
   "description": "网络请求库封装，ASI",
   "homepage": "https://github.com/394771176/WCNetKit",
@@ -13,13 +13,14 @@
   },
   "source": {
     "git": "https://github.com/394771176/WCNetKit.git",
-    "tag": "0.1.2"
+    "tag": "0.1.4"
   },
   "platforms": {
     "ios": "8.0"
   },
   "source_files": [
-    "WCNetKit/Classes/*"
+    "WCNetKit/Classes/*.h",
+    "WCNetKit/Classes/*.m"
   ],
   "public_header_files": [
     "WCNetKit/Classes/*.h"
@@ -34,11 +35,21 @@
     "WCModel/Cache": [
 
     ],
-    "WCEncrypt/MD5": [
-
-    ],
     "WCModule/ASIHttpRequest": [
 
     ]
-  }
+  },
+  "subspecs": [
+    {
+      "name": "OpenUDID",
+      "source_files": [
+        "WCNetKit/Classes/OpenUDID/*.h",
+        "WCNetKit/Classes/OpenUDID/*.m"
+      ],
+      "public_header_files": [
+        "WCNetKit/Classes/OpenUDID/*.h"
+      ],
+      "requires_arc": false
+    }
+  ]
 }

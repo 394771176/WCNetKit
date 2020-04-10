@@ -134,7 +134,7 @@ UIImage *ImageFrom(id image) {
         [btn.titleLabel setFont:FontFrom(font)];
     }
     if (color) {
-        [btn.titleLabel setTextColor:ColorFrom(color)];
+        [btn setTitleColor:ColorFrom(color) forState:UIControlStateNormal];
     }
     return btn;
 }

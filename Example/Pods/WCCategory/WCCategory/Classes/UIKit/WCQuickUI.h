@@ -10,11 +10,16 @@
 
 #define RECT(x, y, w, h)             CGRectMake(x, y, w, h)
 
+#define UICREATE(uiClass, x, y, w, h, AA, toView) \
+UICREATEView(uiClass, x, y, w, h, AA, nil, toView)
 
 #define UICREATEView(uiClass, x, y, w, h, AA, _bgColor, toView) \
 [uiClass Create:RECT(x, y, w, h) autoResizing:AA bgColor:_bgColor addToView:toView];
 
-#define UICREATELabel(uiClass, x, y, w, h, AA, _text, TT, _font, _color, toView) \
+#define UICREATELabel(uiClass, x, y, w, h, AA, _text, _font, _color, toView) \
+UICREATELabel2(uiClass, x, y, w, h, AA, TTLeft, _text, _font, _color, toView)
+
+#define UICREATELabel2(uiClass, x, y, w, h, AA, TT, _text, _font, _color, toView) \
 [uiClass Create:RECT(x, y, w, h) autoResizing:AA text:_text alignment:TT font:_font color:_color addToView:toView];
 
 #define UICREATEImage(uiClass, x, y, w, h, AA, CC, _image, toView) \
@@ -26,16 +31,22 @@
 #define UICREATEBtnImg(uiClass, x, y, w, h, AA, _image, _target, _action, toView) \
 [uiClass Create:RECT(x, y, w, h) autoResizing:AA image:_image target:_target action:_action addToView:toView];
 
-#define UICREATEBtnTxt(uiClass, x, y, w, h, AA, _title, _font, _color, _target, _action, toView) \
+#define UICREATEBtn(uiClass, x, y, w, h, AA, _title, _font, _color, _target, _action, toView) \
 [uiClass Create:RECT(x, y, w, h) autoResizing:AA title:_title font:_font color:_color target:_target action:_action addToView:toView];
 
 //======================
 
+#define UICREATETo(view, uiClass, x, y, w, h, AA, toView) \
+view = UICREATE(uiClass, x, y, w, h, AA, toView)
+
 #define UICREATEViewTo(view, uiClass, x, y, w, h, AA, bgColor, toView) \
 view = UICREATEView(uiClass, x, y, w, h, AA, bgColor, toView)
 
-#define UICREATELabelTo(label, uiClass, x, y, w, h, AA, text, TT, font, color, toView) \
-label = UICREATELabel(uiClass, x, y, w, h, AA, text, TT, font, color, toView)
+#define UICREATELabelTo(label, uiClass, x, y, w, h, AA, text, font, color, toView) \
+label = UICREATELabel(uiClass, x, y, w, h, AA, text, font, color, toView)
+
+#define UICREATELabel2To(label, uiClass, x, y, w, h, AA, TT, text, font, color, toView) \
+label = UICREATELabel2(uiClass, x, y, w, h, AA, TT, text, font, color, toView)
 
 #define UICREATEImageTo(imageV, uiClass, x, y, w, h, AA, CC, image, toView) \
 imageV = UICREATEImage(uiClass, x, y, w, h, AA, CC, image, toView)
@@ -46,8 +57,8 @@ control = UICREATEControl(uiClass, x, y, w, h, AA, target, action, toView)
 #define UICREATEBtnImgTo(btn, uiClass, x, y, w, h, AA, image, target, action, toView) \
 btn = UICREATEBtnImg(uiClass, x, y, w, h, AA, image, target, action, toView)
 
-#define UICREATEBtnTxtTo(btn, uiClass, x, y, w, h, AA, title, font, color, target, action, toView) \
-btn = UICREATEBtnTxt(uiClass, x, y, w, h, AA, title, font, color, target, action, toView)
+#define UICREATEBtnTo(btn, uiClass, x, y, w, h, AA, title, font, color, target, action, toView) \
+btn = UICREATEBtn(uiClass, x, y, w, h, AA, title, font, color, target, action, toView)
 
 
 typedef NS_ENUM(NSUInteger, UIAutoResizingType) {

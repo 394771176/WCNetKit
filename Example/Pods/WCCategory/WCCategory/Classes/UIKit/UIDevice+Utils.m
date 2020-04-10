@@ -14,11 +14,13 @@
 #include <mach/mach.h>
 #include <arpa/inet.h>
 #include <ifaddrs.h>
+#import <AdSupport/ASIdentifierManager.h>
 #import "WCCategory+UI.h"
 
 @implementation UIDevice (Utils)
 
-- (NSString *)machineModel {
++ (NSString *)machineModel 
+{
     static dispatch_once_t one;
     static NSString *model;
     dispatch_once(&one, ^{
@@ -32,7 +34,8 @@
     return model;
 }
 
-- (NSString *)machineModelName {
++ (NSString *)machineModelName
+{
     static dispatch_once_t one;
     static NSString *name;
     dispatch_once(&one, ^{
@@ -132,11 +135,130 @@
     return name;
 }
 
++ (NSString *)clientUDID
+{
+    static NSString *clientUDID = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *array = [[[UIDevice currentDevice] systemVersion] componentsSeparatedByString:@"."];
+        if ([[array firstObject] floatValue]>=7) {
+            clientUDID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+        } else {
+            clientUDID = [self macAddress];
+        }
+    });
+    return clientUDID;
+}
+
++ (NSString *)macAddress
+{
+    int                    mib[6];
+    size_t                len;
+    char                *buf;
+    unsigned char        *ptr;
+    struct if_msghdr    *ifm;
+    struct sockaddr_dl    *sdl;
+    
+    mib[0] = CTL_NET;
+    mib[1] = AF_ROUTE;
+    mib[2] = 0;
+    mib[3] = AF_LINK;
+    mib[4] = NET_RT_IFLIST;
+    
+    if ((mib[5] = if_nametoindex("en0")) == 0) {
+        printf("Error: if_nametoindex error/n");
+        return NULL;
+    }
+    
+    if (sysctl(mib, 6, NULL, &len, NULL, 0) < 0) {
+        printf("Error: sysctl, take 1/n");
+        return NULL;
+    }
+    
+    if ((buf = malloc(len)) == NULL) {
+        printf("Could not allocate memory. error!/n");
+        return NULL;
+    }
+    
+    if (sysctl(mib, 6, buf, &len, NULL, 0) < 0) {
+        printf("Error: sysctl, take 2");
+        free(buf);
+        return NULL;
+    }
+    
+    ifm = (struct if_msghdr *)buf;
+    sdl = (struct sockaddr_dl *)(ifm + 1);
+    ptr = (unsigned char *)LLADDR(sdl);
+    
+    NSString *outstring = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x", *ptr, *(ptr+1), *(ptr+2), *(ptr+3), *(ptr+4), *(ptr+5)];
+    free(buf);
+    return [outstring uppercaseString];
+}
+
++ (NSString *)createUUID
+{
+    // Create universally unique identifier (object)
+    CFUUIDRef uuidObject = CFUUIDCreate(kCFAllocatorDefault);
+    
+    // Get the string representation of CFUUID object.
+    CFStringRef cfStr = CFUUIDCreateString(kCFAllocatorDefault, uuidObject);
+    NSString *uuidStr = (__bridge NSString *)cfStr;
+    
+    CFRelease(uuidObject);
+    CFRelease(cfStr);
+    
+    return uuidStr;
+}
+
++ (BOOL)getJailbroken
+{
+#if TARGET_OS_SIMULATOR
+    // Dont't check simulator
+    return NO;
+#endif
+    
+    // iOS9 URL Scheme query changed ...
+    // NSURL *cydiaURL = [NSURL URLWithString:@"cydia://package"];
+    // if ([[UIApplication sharedApplication] canOpenURL:cydiaURL]) return YES;
+    
+    NSArray *paths = @[@"/Applications/Cydia.app",
+                       @"/private/var/lib/apt/",
+                       @"/private/var/lib/cydia",
+                       @"/private/var/stash"];
+    for (NSString *path in paths) {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) return YES;
+    }
+    
+    FILE *bash = fopen("/bin/bash", "r");
+    if (bash != NULL) {
+        fclose(bash);
+        return YES;
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"/private/%@", [self createUUID]];
+    if ([@"test" writeToFile : path atomically : YES encoding : NSUTF8StringEncoding error : NULL]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+        return YES;
+    }
+    
+    return NO;
+}
+
++ (BOOL)isJailbroken
+{
+    static BOOL isJB = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        isJB = [self getJailbroken];
+    });
+    return isJB;
+}
+
 + (BOOL)isIPhoneX
 {
 #ifdef __IPHONE_11_0
     if (AvailableiOS(11)) {
-        NSString *modelName = [UIDevice currentDevice].machineModelName;
+        NSString *modelName = [UIDevice machineModelName];
         if ([modelName hasPrefix:@"iPhone X"]) {
             return YES;
         } else {

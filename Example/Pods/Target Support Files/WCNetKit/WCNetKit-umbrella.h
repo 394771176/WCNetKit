@@ -15,7 +15,9 @@
 #import "WCDataService.h"
 #import "WCNetKit.h"
 #import "WCNetManager.h"
-#import "WCNetProtocol.h"
+#import "WCSystemUtil.h"
+#import "CKOldOpenUDID.h"
+#import "CKOpenUDID.h"
 
 FOUNDATION_EXPORT double WCNetKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char WCNetKitVersionString[];

@@ -18,15 +18,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [WCNetManager setup:self];
-    
-    NSLog(@"token = %@, agent = %@", [WCNetManager userToken], [WCNetManager userAgent]);
+    [WCNetManager sharedInstance];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"token = %@, agent = %@", [WCNetManager userToken], [WCNetManager userAgent]);
+    NSLog(@"agent = %@", [WCNetManager sharedInstance].userAgent);
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,16 +33,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark -
-
-//- (NSString *)userAgent
-//{
-//    return  @"456";
-//}
-
-- (NSString *)userToken
-{
-    return @"123";
-}
 
 @end

@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <WCModule/ASIFormDataRequest.h>
 
-extern NSString *const APP_EVENT_NETWORK_ERROR;
+#define WCHTTPMethodGET   @"GET"
+#define WCHTTPMethodPOST  @"POST"
 
 @protocol BPURLRequestDelegate;
 
@@ -39,6 +40,10 @@ extern NSString *const APP_EVENT_NETWORK_ERROR;
 @property (nonatomic) BOOL ignoreProxy;
 
 - (void)sign;
+
+- (NSString *)getSignName;
+- (NSString *)getSignValueForUrlStr:(NSString *)urlStr httpMethod:(NSString *)httpMethod;
+
 
 /**
  * type:0

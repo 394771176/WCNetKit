@@ -184,6 +184,13 @@
     self.frame = CGRectMake(left, self.top, width, self.height);
 }
 
+- (void)setBackgroundColorStr:(NSString *)backgroundColorStr
+{
+    if (backgroundColorStr.length) {
+        [self setBackgroundColor:[UIColor colorWithString:backgroundColorStr]];
+    }
+}
+
 @end
 
 @implementation UIView (Utils)

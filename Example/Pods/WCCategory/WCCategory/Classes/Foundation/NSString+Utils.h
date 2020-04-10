@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "NSString+md5.h"
 
 // 占位符
 extern NSString *FFPlaceholderChar(void);
@@ -61,8 +62,6 @@ extern NSString *FFURLEncode(NSString *input);
 + (NSMutableArray *)getRangeStr:(NSString *)text findText:(NSString *)findText;
 
 + (NSString *)timeFormatted:(NSInteger)totalSeconds;
-
-+ (NSString *)createUUID;
 
 @end
 

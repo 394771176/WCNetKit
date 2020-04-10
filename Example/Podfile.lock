@@ -4,32 +4,36 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
-  - WCCategory (0.1.5):
-    - WCCategory/Define (= 0.1.5)
-    - WCCategory/Foundation (= 0.1.5)
-    - WCCategory/UIKit (= 0.1.5)
-  - WCCategory/Define (0.1.5)
-  - WCCategory/Foundation (0.1.5):
+  - WCCategory (0.1.7):
+    - WCCategory/Define (= 0.1.7)
+    - WCCategory/Foundation (= 0.1.7)
+    - WCCategory/UIKit (= 0.1.7)
+  - WCCategory/Define (0.1.7)
+  - WCCategory/Foundation (0.1.7):
     - WCCategory/Define
-  - WCCategory/UIKit (0.1.5):
+  - WCCategory/UIKit (0.1.7):
     - WCCategory/Foundation
-  - WCEncrypt/MD5 (0.1.2)
-  - WCModel/Cache (0.1.1):
+  - WCModel/Cache (0.1.2):
     - WCModel/File
     - WCModule/FMDB
-  - WCModel/Entity (0.1.1):
+  - WCModel/Entity (0.1.2):
     - WCCategory
-  - WCModel/File (0.1.1):
+  - WCModel/File (0.1.2):
     - WCCategory
     - WCModule/RegexKitLite
-  - WCModule/ASIHttpRequest (0.1.6):
+  - WCModule/ASIHttpRequest (0.1.7):
     - WCModule/Reachability
-  - WCModule/FMDB (0.1.6)
-  - WCModule/Reachability (0.1.6)
-  - WCModule/RegexKitLite (0.1.6)
-  - WCNetKit (0.1.2):
+  - WCModule/FMDB (0.1.7)
+  - WCModule/Reachability (0.1.7)
+  - WCModule/RegexKitLite (0.1.7)
+  - WCNetKit (0.1.4):
     - WCCategory
-    - WCEncrypt/MD5
+    - WCModel/Cache
+    - WCModel/Entity
+    - WCModule/ASIHttpRequest
+    - WCNetKit/OpenUDID (= 0.1.4)
+  - WCNetKit/OpenUDID (0.1.4):
+    - WCCategory
     - WCModel/Cache
     - WCModel/Entity
     - WCModule/ASIHttpRequest
@@ -42,7 +46,6 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - FBSnapshotTestCase
     - WCCategory
-    - WCEncrypt
     - WCModel
     - WCModule
 
@@ -52,11 +55,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
-  WCCategory: 9c97b0396f4e96f2bf8e8fa8b9cbef8bfd945f97
-  WCEncrypt: b86d93453f6a4bbf1a09dc922082b2d2d6699978
-  WCModel: 9d8bee0cff43028eea166b7d946290d6d02da245
-  WCModule: 968b93fd10c2f545603c498a3a9113791d66ad12
-  WCNetKit: 867fb2af7977c50089b82f2291d4461f4d512006
+  WCCategory: 25b1e83ca30aad664a368c4bfac3d200f8fcc799
+  WCModel: c613e3ec9de9b6558589d80ca44ba678e940e77f
+  WCModule: 3d3973710ba356802162bc1f12bd431e6fc2c2db
+  WCNetKit: 3f5fd41c2988671aff4203f9fcf98a14902e66d7
 
 PODFILE CHECKSUM: 02d76323e72f8262f81cf5d6386f07b73cc36382
 
