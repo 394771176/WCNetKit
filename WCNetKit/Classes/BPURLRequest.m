@@ -187,6 +187,9 @@
 
 - (NSString *)getSignName
 {
+    if ([WCNetManager sharedInstance].signName) {
+        return [WCNetManager sharedInstance].signName;
+    }
     return @"sign";
 }
 
@@ -200,14 +203,13 @@
     if (range.length>0||[[httpMethod uppercaseString] isEqualToString:WCHTTPMethodPOST]) {
         NSString *pair = nil;
         if (range.length==0) {
-            link = [link stringByAppendingString:@"?"];
             pair = @"";
         } else {
             pair = [link substringFromIndex:range.location+1];
         }
         
         NSString *getSign = [[[[pair stringByAppendingString:@"&"] md5Hash] stringByAppendingString:_signKey] md5Hash];
-        if ([[httpMethod uppercaseString] isEqualToString:@"POST"]) {
+        if ([[httpMethod uppercaseString] isEqualToString:WCHTTPMethodPOST]) {
             unsigned char result[CC_MD5_DIGEST_LENGTH];
             [asiRequest buildPostBody];
             CC_MD5([asiRequest.postBody bytes], (CC_LONG)[asiRequest.postBody length], result);
@@ -228,11 +230,15 @@
 - (void)sign
 {
     NSString *signName = [self getSignName];
-    NSString *link = [asiRequest.url description];
+    NSString *link = [asiRequest.url absoluteString];
     if (signName.length && link.length && _signKey.length) {
         NSString *signValue = [self getSignValueForUrlStr:link httpMethod:self.httpMethod];
         if (signValue.length) {
-            asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@=%@", link, signName, signValue]];
+            if ([link rangeOfString:@"?"].length) {
+                asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@&%@=%@", link, signName, signValue]];
+            } else {
+                asiRequest.url = [NSURL URLWithString:[NSString stringWithFormat:@"%@?%@=%@", link, signName, signValue]];
+            }
         }
     }
 }

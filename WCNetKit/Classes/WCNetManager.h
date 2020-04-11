@@ -27,6 +27,8 @@
 
 @property (nonatomic, strong) NSString *userAgent;
 
+@property (nonatomic, strong) NSString *signName;
+
 SHARED_INSTANCE_H
 
 + (NSString *)createUserAgent;

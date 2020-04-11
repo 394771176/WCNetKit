@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, WCHTTPResultType) {
 
 - (NSString *)requestUrl;
 - (NSMutableDictionary *)requestParams;
+- (BPURLRequest *)createRequestWithUrl:(NSString *)url params:(NSMutableDictionary *)params;
 
 - (BPURLRequest *)makeRequest;
 - (WCDataResult *)parseData:(id)data;

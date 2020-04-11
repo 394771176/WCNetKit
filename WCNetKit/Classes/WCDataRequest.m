@@ -117,6 +117,17 @@
     return params;
 }
 
+- (BPURLRequest *)createRequestWithUrl:(NSString *)url params:(NSMutableDictionary *)params
+{
+    BPURLRequest *request = nil;
+    if (_contentTypeStr) {
+        request = [BPURLRequest getPostFileRequestWithParams:params delegate:_delegate contentType:_contentTypeStr requestURL:url];
+    } else {
+        request = [BPURLRequest getRequestWithParams:params httpMethod:_httpMethod delegate:_delegate requestURL:url];
+    }
+    return request;
+}
+
 - (BPURLRequest *)makeRequest
 {
     NSString *reqUrl = [self requestUrl];
@@ -124,13 +135,7 @@
         return nil;
     }
     
-    BPURLRequest *request = nil;
-    if (_contentTypeStr) {
-        request = [BPURLRequest getPostFileRequestWithParams:[self requestParams] delegate:_delegate contentType:_contentTypeStr requestURL:reqUrl];
-    } else {
-        request = [BPURLRequest getRequestWithParams:[self requestParams] httpMethod:_httpMethod delegate:_delegate requestURL:reqUrl];
-    }
-    
+    BPURLRequest *request = [self createRequestWithUrl:reqUrl params:[self requestParams]];
     request.asiRequest.defaultResponseEncoding = NSUTF8StringEncoding;
     request.signKey = _signKey;
     if (_timeOut > 0) {
