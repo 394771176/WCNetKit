@@ -11,7 +11,7 @@
 #import "BPURLRequest.h"
 #import "WCDataRequest.h"
 #import "WCDataService.h"
-
+#import "WCSystemUtil.h"
 #import "WCNetManager.h"
 
 #endif /* WCNetKit_h */
